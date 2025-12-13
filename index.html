@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1.0</title>
+    <title>OSR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --bg-dark: #050505;
             --card-bg: #121215;
-            --panel-bg: rgba(20, 20, 25, 0.95);
         }
 
         body {
@@ -20,213 +20,449 @@
             background-color: var(--bg-dark);
             background-image: radial-gradient(circle at 50% 50%, #1a1a20 0%, #000 100%);
             color: white;
-            overflow-x: hidden;
+            overflow: hidden; /* Prevent scrolling during animations */
             user-select: none;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* --- Animations --- */
-        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse-glow { 0% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.5; transform: scale(1); } }
-        @keyframes glitch-anim {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-        @keyframes rainbow-text {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- Aura Styles --- */
-        .aura-common { color: #a1a1aa; }
-        .aura-uncommon { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.5); }
-        .aura-rare { color: #3b82f6; text-shadow: 0 0 15px rgba(59, 130, 246, 0.6); }
-        .aura-epic { color: #a855f7; text-shadow: 0 0 20px rgba(168, 85, 247, 0.6); }
+        /* --- Global & Text Animations --- */
+        @keyframes shine-anim { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
         
-        .aura-pyromaniac { background: linear-gradient(to bottom, #f97316, #ef4444); -webkit-background-clip: text; color: transparent; text-shadow: 0 0 20px #c2410c; }
-        .aura-glacial { color: #22d3ee; text-shadow: 0 0 15px #22d3ee; }
-        .aura-magnetic { color: #94a3b8; letter-spacing: -1px; text-shadow: 3px 0px 0px rgba(255,255,255,0.2); }
-        .aura-vortex { background: repeating-linear-gradient(45deg, #10b981, #34d399 10%, #059669 20%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: rainbow-text 3s linear infinite; background-size: 200% 200%; }
-        .aura-demon { color: #dc2626; text-shadow: 0 0 15px #b91c1c; background: -webkit-linear-gradient(#ff0000, #450a0a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .aura-permafrost { color: #e0f2fe; text-shadow: 0 0 10px #7dd3fc, 0 0 20px #0ea5e9; }
-        .aura-starlight { color: #fcd34d; text-shadow: 0 0 10px #fbbf24, 0 0 30px #f59e0b; }
-        .aura-seraphim { color: #fef08a; text-shadow: 0 0 20px #facc15, 0 0 40px #eab308; }
-        .aura-necromancer { color: #84cc16; text-shadow: 0 0 10px #65a30d, 2px 2px 0px #000; font-family: 'Courier New', monospace; }
-        .aura-crazy { background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); background-size: 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: rainbow-text 0.5s linear infinite; }
-        .aura-unreal { color: #d8b4fe; text-shadow: 0 0 15px #a855f7, 0 0 50px #6b21a8; letter-spacing: 5px; }
-        .aura-matrix { color: #0f0; text-shadow: 0 0 5px #0f0; font-family: monospace; animation: glitch-anim 2s infinite alternate-reverse; }
-        .aura-transcendent { color: #fff; text-shadow: 0 0 10px #22d3ee, 0 0 30px #22d3ee; opacity: 0.9; }
-        .aura-solaris { background: radial-gradient(circle, #fff 20%, #f59e0b 50%, #b45309 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px #f59e0b; animation: pulse-glow 2s infinite; }
-        .aura-twilight { background: linear-gradient(to right, #4c1d95, #be185d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px #86198f; }
-        .aura-hypernova { background: conic-gradient(#fff, #f472b6, #60a5fa, #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,255,255,0.8); animation: rotate 2s linear infinite; display: inline-block; }
-        .aura-archangel { color: #fff; text-shadow: 0 0 10px #fff, 0 0 20px #fbbf24; font-weight: 800; }
-        .aura-theend { color: #000; text-shadow: 3px 3px 0px #ff0000, -3px -3px 0px #00ffff; animation: glitch-anim 0.2s infinite; }
-        .aura-infinity { background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); background-size: 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: rainbow-text 10s ease infinite; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)); font-size: 1.2em; }
+        /* Aura Text Styles */
+        .aura-base { font-weight: 800; transition: all 0.3s; text-transform: uppercase; }
+        
+        /* Low/Mid Tier (Simple CSS) */
+        .aura-common { color: #a1a1aa; }
+        .aura-uncommon { color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
+        .aura-rare { color: #3b82f6; text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .aura-epic { color: #a855f7; text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+        .aura-pyromaniac { background: linear-gradient(to bottom, #f97316, #ef4444); -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 10px #c2410c); }
+        .aura-glacial { color: #22d3ee; text-shadow: 0 0 10px #22d3ee; }
+        .aura-magnetic { color: #94a3b8; letter-spacing: -1px; }
+        .aura-vortex { background: linear-gradient(90deg, #10b981, #34d399, #059669); -webkit-background-clip: text; color: transparent; }
+        .aura-demon { color: #dc2626; text-shadow: 0 0 15px #7f1d1d; }
+        .aura-permafrost { color: #e0f2fe; text-shadow: 0 0 20px #0ea5e9; }
+        .aura-starlight { color: #fcd34d; text-shadow: 0 0 15px #fcd34d; }
+        .aura-seraphim { background: linear-gradient(45deg, #fef08a, #fbbf24); -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 10px #fbbf24); }
+        .aura-necromancer { color: #84cc16; font-family: 'Share Tech Mono', monospace; text-shadow: 0 0 10px #365314; }
+
+        /* High Tier (Complex Animations) */
+        .aura-crazy { animation: crazy-text 0.5s infinite; }
+        @keyframes crazy-text { 0% { color: #f00; transform: skewX(10deg); } 25% { color: #0f0; transform: skewX(-10deg); } 50% { color: #00f; transform: scale(1.1); } 75% { color: #ff0; } 100% { color: #f0f; transform: skewX(0); } }
+
+        .aura-unreal { color: white; text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 40px #fff; letter-spacing: 5px; }
+        
+        .aura-matrix { color: #0f0; font-family: 'Share Tech Mono', monospace; text-shadow: 0 0 5px #0f0; animation: matrix-pulse 1s infinite alternate; }
+        @keyframes matrix-pulse { from { opacity: 0.8; text-shadow: 0 0 2px #0f0; } to { opacity: 1; text-shadow: 0 0 10px #0f0; } }
+
+        .aura-transcendent { background: linear-gradient(to top, #22d3ee, #fff); -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px #22d3ee); }
+        
+        .aura-solaris { color: #fff7ed; text-shadow: 0 0 20px #f97316, 0 0 50px #ea580c; }
+        
+        .aura-twilight { background: linear-gradient(to right, #c084fc, #e879f9); -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 15px #7e22ce); }
+        
+        .aura-hypernova { background: linear-gradient(135deg, #fff, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent; animation: cosmic-pulse 2s infinite; }
+        @keyframes cosmic-pulse { 0% { filter: drop-shadow(0 0 10px #ec4899); } 50% { filter: drop-shadow(0 0 25px #ec4899); } 100% { filter: drop-shadow(0 0 10px #ec4899); } }
+
+        .aura-archangel { color: #fef3c7; text-shadow: 0 0 20px #fbbf24, 0 0 40px #d97706; }
+        
+        .aura-theend { color: black; -webkit-text-stroke: 1px white; text-shadow: 0 0 10px white; animation: void-shake 0.1s infinite; }
+        @keyframes void-shake { 0% { transform: translate(1px, 1px); } 100% { transform: translate(-1px, -1px); } }
+
+        .aura-infinity { 
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); 
+            background-size: 200%; 
+            -webkit-background-clip: text; 
+            color: transparent; 
+            animation: infinity-flow 3s linear infinite; 
+            font-size: 1.2em; 
+        }
+        @keyframes infinity-flow { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
 
         /* --- UI Elements --- */
         #particles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
-        .particle { position: absolute; border-radius: 50%; opacity: 0.7; pointer-events: none; }
+        .particle { position: absolute; border-radius: 50%; pointer-events: none; }
 
-        #cutscene-overlay { display: none; position: fixed; inset: 0; background: black; z-index: 100; align-items: center; justify-content: center; flex-direction: column; }
-        #cutscene-star { width: 0; height: 0; background: white; border-radius: 50%; box-shadow: 0 0 50px white; }
+        /* Fullscreen Cutscene Overlay */
+        #cutscene-overlay { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: black; 
+            z-index: 9999; /* Top level */
+            align-items: center; 
+            justify-content: center; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
 
+        /* Container for the SVG/CSS visual in cutscene */
+        #cutscene-visual-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Cutscene Text Container - Appears after visual */
+        #cutscene-info {
+            z-index: 100;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- CUTSCENE KEYFRAMES --- */
+
+        /* CRAZY */
+        @keyframes crazy-flash-bg { 0% { background: #f00; } 15% { background: #ff0; } 30% { background: #0f0; } 45% { background: #0ff; } 60% { background: #00f; } 75% { background: #f0f; } 90% { background: #fff; } 100% { background: #000; } }
+        @keyframes crazy-glitch-icon { 0% { transform: translate(0); opacity: 1; } 20% { transform: translate(-5px, 5px) skewX(10deg); clip-path: inset(5% 0 20% 0); opacity: 0.8; } 40% { transform: translate(5px, -5px) skewX(-10deg); clip-path: inset(20% 0 5% 0); opacity: 0.9; } 60% { transform: scale(1.2) rotate(5deg); opacity: 1; } 80% { filter: invert(1) brightness(1.2); } 100% { transform: translate(0) rotate(0); filter: none; opacity: 1; } }
+
+        /* UNREAL */
+        @keyframes unreal-bg { 0% { background: #000; } 100% { background: #2e1065; } }
+        @keyframes unreal-star-expand { 
+            0% { transform: scale(0) rotate(0deg); opacity: 0; filter: drop-shadow(0 0 0 white); } 
+            20% { transform: scale(0.5) rotate(72deg); opacity: 1; filter: drop-shadow(0 0 20px white); }
+            50% { transform: scale(1.5) rotate(180deg); filter: drop-shadow(0 0 100px white); } 
+            100% { transform: scale(1) rotate(360deg); filter: drop-shadow(0 0 50px white); } 
+        }
+
+        /* MATRIX */
+        .matrix-col { position: absolute; top: -100px; color: #0f0; font-family: 'Share Tech Mono', monospace; font-size: 20px; text-shadow: 0 0 5px #0f0; animation: matrix-fall linear forwards; opacity: 0.7; }
+        @keyframes matrix-fall { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } to { transform: translateY(110vh); opacity: 0; } }
+
+        /* SOLARIS */
+        @keyframes solaris-implode { 0% { transform: scale(5); opacity: 0; filter: brightness(0.5); } 40% { transform: scale(1); opacity: 1; background: #f97316; box-shadow: 0 0 100px #ea580c; filter: brightness(1.2); } 80% { transform: scale(0.8); background: #fff; box-shadow: 0 0 200px #fff; filter: brightness(2); } 100% { transform: scale(20); opacity: 0; filter: brightness(0); } }
+
+        /* HYPERNOVA */
+        @keyframes hypernova-explode { 0% { transform: scale(0.1); opacity: 0; filter: brightness(0.5) blur(0px); box-shadow: 0 0 0 rgba(255,0,204,0.5); } 30% { transform: scale(1); opacity: 1; background: radial-gradient(circle, #fff 0%, #ff00cc 50%, #3333ff 100%); box-shadow: 0 0 100px #ff00cc; filter: brightness(1.5) blur(5px); } 70% { transform: scale(2); opacity: 0.8; background: radial-gradient(circle, #fff 0%, #ec4899 50%, #000 100%); box-shadow: 0 0 200px #ec4899; filter: brightness(2) blur(10px); } 100% { transform: scale(5); opacity: 0; filter: brightness(0) blur(20px); box-shadow: 0 0 300px rgba(236,72,153,0); } }
+
+        /* ARCHANGEL */
+        @keyframes archangel-wings { 0% { transform: scale(0.5) rotate(-10deg); opacity: 0; } 50% { transform: scale(1.2) rotate(10deg); opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+
+        /* THE END */
+        @keyframes theend-void { 0% { background: white; } 50% { background: gray; } 100% { background: black; } }
+
+        /* INFINITY */
+        @keyframes infinity-draw-path { to { stroke-dashoffset: 0; } }
+        @keyframes infinity-rotate-hue { 0% { filter: hue-rotate(0deg) brightness(1); } 50% { filter: hue-rotate(180deg) brightness(1.5); } 100% { filter: hue-rotate(360deg) brightness(1); } }
+
+        /* TRANSCENDENT */
+        @keyframes transcendent-glow { 0% { transform: scale(0); opacity: 0; filter: drop-shadow(0 0 0 #22d3ee); } 50% { transform: scale(1.5); opacity: 1; filter: drop-shadow(0 0 50px #22d3ee); } 100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 20px #22d3ee); } }
+
+        /* UI Utilities */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-        .inv-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        /* Обновленный инвентарь */
+        .inv-card { 
+            width: 100%; 
+            height: 90px; 
+            background: rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px); 
+            border-radius: 8px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            overflow: hidden; 
+            transition: all 0.3s; 
+            aspect-ratio: 1;
+        }
+        .inv-card:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .inv-card .aura-effect { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 10px; 
+            text-align: center; 
+            padding: 4px; 
+            color: inherit; 
+            text-shadow: 0 0 5px currentColor; 
+            z-index: 1;
+        }
+        .inv-card .aura-count { 
+            position: absolute; 
+            bottom: 4px; 
+            right: 4px; 
+            font-size: 10px; 
+            color: #fff; 
+            background: rgba(0,0,0,0.5); 
+            padding: 2px 4px; 
+            border-radius: 4px; 
+            z-index: 2;
+        }
+        .inv-card.equipped { border: 2px solid #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+        
+        /* Иконки управления - фиксированные позиции */
+        .inv-card .icon-top-left {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .inv-card .icon-top-right {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .inv-card .icon-bottom-left {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .btn-shine { position: relative; overflow: hidden; }
         .btn-shine::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent); transform: skewX(-25deg); animation: shine-anim 3s infinite; }
-        @keyframes shine-anim { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
 
-        /* Disabled Button State */
-        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; background-color: gray !important; color: #666 !important; }
+
+        /* Perfect Center Layout */
+        .main-display-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Vertical Center */
+            width: 100%;
+            position: relative;
+        }
+
+        #cutscene-title { font-size: 4rem !important; word-break: break-word; }
+
+        /* Фиксированная сетка инвентаря */
+        #inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 8px;
+            width: 100%;
+            padding: 4px;
+        }
+
+        @media (min-width: 640px) {
+            #inventory-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 10px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            #inventory-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                gap: 12px;
+            }
+        }
+
+        /* Статус экипированной ауры */
+        .equipped-status {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: black;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 8px;
+        }
 
     </style>
 </head>
-<body class="flex flex-col items-center">
+<body>
 
     <div id="particles-container"></div>
 
-    <!-- Cutscene Overlay -->
+    <!-- CUTSCENE OVERLAY -->
     <div id="cutscene-overlay">
-        <div id="cutscene-star"></div>
-        <div id="cutscene-text" class="mt-8 text-center opacity-0 transition-all duration-100 z-10 scale-0"></div>
-        <div id="cutscene-chance" class="text-gray-400 font-mono mt-2 opacity-0"></div>
+        <div id="cutscene-visual-container"></div>
+        <div id="cutscene-info">
+            <h1 id="cutscene-title" class="text-6xl md:text-9xl font-bold mb-2"></h1>
+            <p id="cutscene-subtitle" class="text-xl md:text-3xl font-mono text-gray-300"></p>
+        </div>
     </div>
 
     <!-- Header -->
-    <header class="w-full p-4 bg-[#0a0a0c] border-b border-gray-800 z-10 shadow-lg flex flex-col gap-2">
-        <div class="flex justify-between items-center">
-            <div class="flex flex-col">
-                <h1 class="text-2xl md:text-3xl font-bold italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">Omega Star RNG ✨</h1>
+    <header class="w-full p-4 bg-[#0a0a0c] border-b border-gray-800 z-10 shadow-lg flex-shrink-0">
+        <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center">
+                <h1 class="text-1.5xl md:text-2xl font-bold italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-purple-500 to-pink-500">Omega star RNG ⯌</h1>
             </div>
-            <div class="flex gap-4 text-sm">
-                <!-- Removed Essence Display -->
-                <div class="text-right">
-                    <p class="text-[10px] text-gray-500 uppercase">Всего роллов</p>
-                    <p id="total-rolls" class="font-mono text-xl text-white">0</p>
-                </div>
+            <div class="text-right">
+                <p class="text-[10px] text-gray-500 uppercase">Rolls</p>
+                <p id="total-rolls" class="font-mono text-xl text-white">0</p>
             </div>
         </div>
-        
-        <!-- Luck Status Bar -->
         <div class="flex justify-between items-end border-t border-gray-800 pt-2">
              <div class="flex items-center gap-2">
-                <span class="text-xs text-gray-400 uppercase">Текущая Удача:</span>
+                <span class="text-xs text-gray-400 uppercase">Luck:</span>
                 <span id="luck-multiplier" class="text-lg font-bold text-yellow-400">x1.0</span>
              </div>
-             <div id="bonus-info" class="text-xs text-blue-400 font-mono hidden">
-                 X2 BOOST ACTIVE!
-             </div>
+             <div id="equipped-aura-display" class="ml-3 text-sm hidden">
+                    <span class="text-gray-400">Буст:</span>
+                    <span id="equipped-aura-name" class="font-bold ml-1"></span>
+                    <span id="equipped-aura-mult" class="equipped-status ml-2"></span>
+                </div>
+             <div id="bonus-info" class="text-xs text-blue-400 font-mono hidden">X2 BOOST!</div>
         </div>
     </header>
 
     <!-- Main Game Area -->
-    <main class="flex-1 w-full max-w-5xl flex flex-col items-center justify-center p-6 relative z-10">
+    <main class="w-full max-w-5xl mx-auto flex flex-col items-center h-full px-4 relative z-10">
         
-        <div class="relative w-full h-72 md:h-96 flex flex-col items-center justify-center mb-8">
-            <div id="main-glow" class="absolute w-64 h-64 md:w-80 md:h-80 rounded-full blur-[100px] opacity-20 bg-white transition-colors duration-1000"></div>
+        <!-- CENTERED DISPLAY -->
+        <div class="main-display-wrapper">
+            <div id="main-glow" class="absolute w-64 h-64 md:w-96 md:h-96 rounded-full blur-[120px] opacity-20 bg-white transition-colors duration-1000"></div>
             
-            <div class="text-center z-10 w-full" id="aura-display-container">
-                <div id="current-aura-name" class="text-5xl md:text-8xl font-bold tracking-wider mb-4 text-white transition-all duration-300 drop-shadow-2xl">
+            <div class="text-center z-10 relative">
+                <div id="current-aura-name" class="aura-base text-5xl md:text-8xl font-bold tracking-wider mb-6 text-white drop-shadow-2xl transition-all duration-300 scale-100">
                     ROLL TO START
                 </div>
-                <div id="current-aura-chance" class="text-lg md:text-2xl font-mono text-gray-400 bg-black/30 px-4 py-1 rounded-full inline-block backdrop-blur-sm border border-white/5">
-                    1 in ???
+                
+                <div class="flex flex-col items-center gap-2">
+                    <div id="current-aura-chance" class="text-lg md:text-2xl font-mono text-gray-400 bg-black/40 px-6 py-2 rounded-full inline-block backdrop-blur-sm border border-white/10">
+                        1 in ???
+                    </div>
+                    <div id="current-aura-desc" class="text-sm md:text-lg text-gray-400 max-w-xl mx-auto mt-2 min-h-[1.5em]"></div>
                 </div>
-                <div id="current-aura-desc" class="text-sm md:text-base text-gray-400 mt-4 max-w-lg mx-auto flex items-center justify-center"></div>
             </div>
         </div>
 
-        <!-- Controls -->
-        <div class="flex flex-col items-center gap-4 w-full max-w-md">
-            <button id="roll-btn" class="btn-shine group relative w-full h-20 bg-white text-black font-black text-3xl tracking-[0.2em] uppercase rounded hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] border-2 border-transparent hover:border-gray-300">
+        <!-- Controls (Bottom) -->
+        <div class="flex flex-col items-center gap-4 w-full max-w-md flex-shrink-0 mb-8">
+            <div id="luck-progress" class="text-yellow-400 font-bold text-xl mb-2">1/10</div>
+            <button id="roll-btn" class="btn-shine group relative w-full h-24 bg-white text-black font-black text-4xl tracking-[0.2em] uppercase rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)] border-4 border-transparent hover:border-gray-200">
                 <span class="relative z-10 flex items-center justify-center gap-3"><i class="fa-solid fa-dice-d20"></i> ROLL</span>
             </button>
 
             <div class="grid grid-cols-2 gap-4 w-full">
                 <button id="auto-roll-btn" class="h-12 border border-gray-700 bg-gray-900/50 rounded hover:bg-gray-800 text-gray-300 font-bold flex items-center justify-center gap-2 transition-all">
-                    <i class="fa-solid fa-arrows-rotate"></i> AUTO: <span id="auto-status" class="text-red-500">OFF</span>
+                    <i class="fa-solid fa-arrows-rotate"></i> AUTO
                 </button>
-                <button onclick="toggleDrawer()" class="h-12 border border-gray-700 bg-gray-900/50 rounded hover:bg-gray-800 text-gray-300 font-bold flex items-center justify-center gap-2 transition-all relative">
-                    <i class="fa-solid fa-box-open"></i> ИНВЕНТАРЬ
+                <button onclick="toggleDrawer()" class="h-12 border border-gray-700 bg-gray-900/50 rounded hover:bg-gray-800 text-gray-300 font-bold flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-box-open"></i> INVENTORY
                 </button>
-            </div>
-            
-            <div class="text-[10px] text-gray-500 flex justify-between w-full px-1">
-                <span>Cooldown enabled</span>
-                <span>Every 10th Roll = x2 Luck</span>
             </div>
         </div>
     </main>
 
-    <!-- Inventory Drawer (Simplified, no tabs) -->
+    <!-- Inventory Drawer -->
     <div id="main-drawer" class="fixed inset-0 bg-black/95 backdrop-blur-xl transform translate-y-full transition-transform duration-300 z-50 flex flex-col">
-        <!-- Drawer Header -->
         <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-[#121215]">
-            <div class="text-lg font-bold text-white px-2">
-                Ваши Ауры
-            </div>
-            <button onclick="toggleDrawer()" class="text-gray-400 hover:text-white transition-transform hover:rotate-90"><i class="fa-solid fa-xmark fa-2x"></i></button>
+            <div class="text-lg font-bold text-white px-2">Collection</div>
+            <button onclick="toggleDrawer()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-2x"></i></button>
         </div>
-        
-        <!-- Inventory Content -->
         <div id="content-inventory" class="flex-1 overflow-y-auto p-4">
-             <div class="flex justify-end mb-4">
-                <button onclick="clearData()" class="text-xs text-red-800 hover:text-red-500 uppercase">Сброс данных</button>
+             <div class="flex justify-between mb-4">
+                <button onclick="clearData()" class="text-xs text-red-800 hover:text-red-500 uppercase">WIPE SAVE</button>
+                <button onclick="clearNonFavorites()" class="text-xs text-red-500 hover:text-red-300 uppercase">CLEAR NON-FAVS</button>
              </div>
-            <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+             <div id="inventory-grid" class="w-full"></div>
         </div>
     </div>
 
     <script>
-        // --- Data Definitions ---
+        // --- CONFIGURATION ---
+        const BOOST_MULTIPLIERS = {
+            'vortex': 1.05,
+            'demon': 1.1,
+            'permafrost': 1.15,
+            'starlight': 1.2,
+            'seraphim': 1.25,
+            'necromancer': 1.3,
+            'crazy': 1.4,
+            'unreal': 1.5,
+            'matrix': 1.6,
+            'transcendent': 1.7,
+            'solaris': 1.8,
+            'hypernova': 2.0,
+            'archangel': 2.2,
+            'theend': 2.5,
+            'infinity': 3.0
+        };
+
         const AURAS = [
-            { id: 'common', name: 'COMMON', chance: 2, color: 'aura-common', hex: '#a1a1aa', desc: 'Просто и скучно.' },
-            { id: 'uncommon', name: 'UNCOMMON', chance: 4, color: 'aura-uncommon', hex: '#4ade80', desc: 'Немного зелени.' },
-            { id: 'rare', name: 'RARE', chance: 16, color: 'aura-rare', hex: '#3b82f6', desc: 'Редкий синий кристалл.' },
-            { id: 'epic', name: 'EPIC', chance: 64, color: 'aura-epic', hex: '#a855f7', desc: 'Эпическая энергия.' },
-            { id: 'pyromaniac', name: 'PYROMANIAC', chance: 350, color: 'aura-pyromaniac', hex: '#f97316', desc: 'Твоя душа горит.' },
-            { id: 'glacial', name: 'GLACIAL', chance: 1500, color: 'aura-glacial', hex: '#22d3ee', desc: 'Абсолютный ноль.', particle: 'snow' },
-            { id: 'magnetic', name: 'MAGNETIC', chance: 3200, color: 'aura-magnetic', hex: '#94a3b8', desc: 'Поляризация.' },
-            { id: 'vortex', name: 'VORTEX', chance: 6500, color: 'aura-vortex', hex: '#10b981', desc: 'Ветер перемен.', particle: 'wind' },
-            { id: 'demon', name: 'DEMON', chance: 12000, color: 'aura-demon', hex: '#dc2626', desc: 'Адское пламя.', cutscene: true, tier: 1, particle: 'ember' },
-            { id: 'permafrost', name: 'PERMAFROST', chance: 25000, color: 'aura-permafrost', hex: '#0ea5e9', desc: 'Вечная мерзлота.', cutscene: true, tier: 1, particle: 'snow' },
-            { id: 'starlight', name: 'STARLIGHT', chance: 50000, color: 'aura-starlight', hex: '#fbbf24', desc: 'Свет звезд.', cutscene: true, tier: 2, particle: 'sparkle' },
-            { id: 'seraphim', name: 'SERAPHIM', chance: 125000, color: 'aura-seraphim', hex: '#facc15', desc: 'Не бойтесь.', cutscene: true, tier: 2, particle: 'light' },
-            { id: 'necromancer', name: 'NECROMANCER', chance: 250000, color: 'aura-necromancer', hex: '#84cc16', desc: 'Восставший.', cutscene: true, tier: 2, particle: 'green-mist' },
-            { id: 'crazy', name: 'CRAZY', chance: 400000, color: 'aura-crazy', hex: '#00ff00', desc: 'ГЛЮК.', cutscene: true, tier: 2, particle: 'confetti' },
-            { id: 'unreal', name: 'UNREAL', chance: 750000, color: 'aura-unreal', hex: '#a855f7', desc: 'Это сон?', cutscene: true, tier: 3, particle: 'void' },
-            { id: 'matrix', name: 'MATRIX', chance: 1200000, color: 'aura-matrix', hex: '#00ff00', desc: 'Код мира.', cutscene: true, tier: 3, particle: 'code' },
-            { id: 'transcendent', name: 'TRANSCENDENT', chance: 2000000, color: 'aura-transcendent', hex: '#22d3ee', desc: 'Выше богов.', cutscene: true, tier: 3, particle: 'light' },
-            { id: 'solaris', name: 'SOLARIS', chance: 3500000, color: 'aura-solaris', hex: '#f97316', desc: 'Сила солнц.', cutscene: true, tier: 3, particle: 'sun' },
-            { id: 'twilight', name: 'TWILIGHT', chance: 5000000, color: 'aura-twilight', hex: '#86198f', desc: 'Конец дня.', cutscene: true, tier: 3, particle: 'dusk' },
-            { id: 'hypernova', name: 'HYPERNOVA', chance: 8000000, color: 'aura-hypernova', hex: '#ec4899', desc: 'Рождение галактики.', cutscene: true, tier: 4, particle: 'galaxy' },
-            { id: 'archangel', name: 'ARCHANGEL', chance: 15000000, color: 'aura-archangel', hex: '#fbbf24', desc: 'Защитник.', cutscene: true, tier: 4, particle: 'feather' },
-            { id: 'theend', name: 'THE END', chance: 35000000, color: 'aura-theend', hex: '#000000', desc: 'КОНЕЦ.', cutscene: true, tier: 4, particle: 'glitch' },
-            { id: 'infinity', name: 'INFINITY', chance: 99999999, color: 'aura-infinity', hex: '#ffffff', desc: 'Я ЕСТЬ ВСЁ.', cutscene: true, tier: 5, particle: 'rainbow' }
+            { id: 'common', name: 'COMMON', chance: 2, color: 'aura-common', hex: '#a1a1aa', desc: 'Просто камень.' },
+            { id: 'uncommon', name: 'UNCOMMON', chance: 4, color: 'aura-uncommon', hex: '#4ade80', desc: 'Трава у дома.' },
+            { id: 'rare', name: 'RARE', chance: 16, color: 'aura-rare', hex: '#3b82f6', desc: 'Капля воды.' },
+            { id: 'epic', name: 'EPIC', chance: 64, color: 'aura-epic', hex: '#a855f7', desc: 'Магический след.' },
+            { id: 'pyromaniac', name: 'PYROMANIAC', chance: 150, color: 'aura-pyromaniac', hex: '#f97316', desc: 'Искра пламени.' },
+            { id: 'glacial', name: 'GLACIAL', chance: 500, color: 'aura-glacial', hex: '#22d3ee', desc: 'Холодное сердце.', particle: 'snow' },
+            { id: 'magnetic', name: 'MAGNETIC', chance: 1200, color: 'aura-magnetic', hex: '#94a3b8', desc: 'Притяжение.' },
+            { id: 'vortex', name: 'VORTEX', chance: 2500, color: 'aura-vortex', hex: '#10b981', desc: 'Торнадо.', particle: 'wind', hasBoost: true },
+            { id: 'demon', name: 'DEMON', chance: 13000, color: 'aura-demon', hex: '#dc2626', desc: 'Гнев преисподней.', particle: 'ember', hasBoost: true },
+            { id: 'permafrost', name: 'PERMAFROST', chance: 25000, color: 'aura-permafrost', hex: '#0ea5e9', desc: 'Вечный лед.', particle: 'snow', hasBoost: true },
+            { id: 'starlight', name: 'STARLIGHT', chance: 50000, color: 'aura-starlight', hex: '#fbbf24', desc: 'Падающая звезда.', particle: 'sparkle', hasBoost: true },
+            { id: 'seraphim', name: 'SERAPHIM', chance: 125000, color: 'aura-seraphim', hex: '#facc15', desc: 'Святое сияние.', particle: 'light', hasBoost: true },
+            { id: 'necromancer', name: 'NECROMANCER', chance: 250000, color: 'aura-necromancer', hex: '#84cc16', desc: 'Токсичные отходы.', particle: 'green-mist', hasBoost: true },
+            
+            // --- HIGH TIERS (WITH CUTSCENES) ---
+            { id: 'crazy', name: 'CRAZY', chance: 400000, color: 'aura-crazy', hex: '#ff00ff', desc: 'СИСТЕМНЫЙ СБОЙ.', cutscene: true, particle: 'confetti', hasBoost: true },
+            { id: 'unreal', name: 'UNREAL', chance: 750000, color: 'aura-unreal', hex: '#a855f7', desc: 'Это не может быть правдой.', cutscene: true, particle: 'void', hasBoost: true },
+            { id: 'matrix', name: 'MATRIX', chance: 1200000, color: 'aura-matrix', hex: '#00ff00', desc: 'Взлом реальности.', cutscene: true, particle: 'code', hasBoost: true },
+            { id: 'transcendent', name: 'TRANSCENDENT', chance: 2000000, color: 'aura-transcendent', hex: '#22d3ee', desc: 'Чистая энергия.', cutscene: true, particle: 'light', hasBoost: true },
+            { id: 'solaris', name: 'SOLARIS', chance: 3500000, color: 'aura-solaris', hex: '#f97316', desc: 'Сверхновая звезда.', cutscene: true, particle: 'sun', hasBoost: true },
+            { id: 'hypernova', name: 'HYPERNOVA', chance: 8000000, color: 'aura-hypernova', hex: '#ec4899', desc: 'Галактический шторм.', cutscene: true, particle: 'galaxy', hasBoost: true },
+            { id: 'archangel', name: 'ARCHANGEL', chance: 15000000, color: 'aura-archangel', hex: '#fbbf24', desc: 'Божественное вмешательство.', cutscene: true, particle: 'feather', hasBoost: true },
+            { id: 'theend', name: 'THE END', chance: 35000000, color: 'aura-theend', hex: '#000000', desc: 'Ничто.', cutscene: true, particle: 'glitch', hasBoost: true },
+            { id: 'infinity', name: 'INFINITY', chance: 99999999, color: 'aura-infinity', hex: '#ffffff', desc: 'Я ЕСТЬ НАЧАЛО И КОНЕЦ.', cutscene: true, particle: 'rainbow', hasBoost: true }
         ];
 
-        // --- State ---
-        let state = {
-            totalRolls: 0,
+        let state = { 
+            totalRolls: 0, 
             inventory: {}, 
             bestAura: null, 
             autoRoll: false,
+            equippedAura: null
         };
-
         let isRolling = false;
         let isOnCooldown = false;
         let autoInterval = null;
         let particleInterval = null;
 
-        // --- DOM ---
         const els = {
             rollBtn: document.getElementById('roll-btn'),
             autoBtn: document.getElementById('auto-roll-btn'),
@@ -239,125 +475,299 @@
             invGrid: document.getElementById('inventory-grid'),
             luckMult: document.getElementById('luck-multiplier'),
             bonusInfo: document.getElementById('bonus-info'),
-            particles: document.getElementById('particles-container')
+            luckProgress: document.getElementById('luck-progress'),
+            particles: document.getElementById('particles-container'),
+            equippedDisplay: document.getElementById('equipped-aura-display'),
+            equippedName: document.getElementById('equipped-aura-name'),
+            equippedMult: document.getElementById('equipped-aura-mult'),
+            cutscene: {
+                overlay: document.getElementById('cutscene-overlay'),
+                visual: document.getElementById('cutscene-visual-container'),
+                info: document.getElementById('cutscene-info'),
+                title: document.getElementById('cutscene-title'),
+                subtitle: document.getElementById('cutscene-subtitle')
+            }
         };
 
-        // --- Init ---
         function init() {
             loadData();
+            recalculateBestAura();
             updateStatsUI();
+            displayResult(state.bestAura || AURAS[0], true);
+            updateEquippedDisplay();
 
-            els.rollBtn.addEventListener('click', () => { 
-                if(!isRolling && !isOnCooldown && !state.autoRoll) performRoll(); 
-            });
+            els.rollBtn.addEventListener('click', () => { if(!isRolling && !isOnCooldown && !state.autoRoll) performRoll(); });
             els.autoBtn.addEventListener('click', toggleAutoRoll);
         }
 
-        // --- Logic: Luck Calculation ---
-        function getCurrentLuck() {
-            let mult = 1;
-            
-            // Mechanic: Every 10th roll gives x2 luck
-            // We check if the NEXT roll (current total + 1) is divisible by 10
-            if ((state.totalRolls + 1) % 10 === 0) {
-                mult *= 2;
-            }
-
-            return mult;
-        }
-
-        function getRandomAura() {
-            const luck = getCurrentLuck();
-            const sortedAuras = [...AURAS].sort((a, b) => b.chance - a.chance);
-            
-            for (let aura of sortedAuras) {
-                const effectiveChance = Math.max(1, aura.chance / luck);
-                if (Math.random() * effectiveChance < 1) {
-                    return aura;
-                }
-            }
-            return AURAS[0];
-        }
-
-        // --- Logic: Roll ---
         async function performRoll(skipAnim = false) {
-            // Prevent rolling if disabled or cooling down
-            if (isRolling || (isOnCooldown && !state.autoRoll)) return;
-
+            if (isRolling) return;
             isRolling = true;
             
-            // Manual Roll Cooldown Logic
             if (!state.autoRoll) {
                 isOnCooldown = true;
                 els.rollBtn.disabled = true;
-                setTimeout(() => {
-                    isOnCooldown = false;
-                    if (!state.autoRoll) els.rollBtn.disabled = false;
-                }, 1000); // 1 second cooldown
+                setTimeout(() => { isOnCooldown = false; if(!state.autoRoll) els.rollBtn.disabled = false; }, 800);
             }
 
-            // Visuals
             if (!skipAnim) {
-                // Update UI to show if 10th roll bonus is active for THIS roll animation
-                updateStatsUI(true); // pass true to preview luck for next roll
-
                 let ticks = 0;
                 const anim = setInterval(() => {
-                    const temp = AURAS[Math.floor(Math.random()*8)];
-                    els.name.innerText = temp.name;
-                    els.name.className = `text-5xl md:text-8xl font-bold tracking-wider mb-4 text-gray-700 blur-[2px]`;
+                    els.name.innerText = AURAS[Math.floor(Math.random()*5)].name;
+                    els.name.style.filter = "blur(4px)";
                     ticks++;
-                    if (ticks>6) clearInterval(anim);
+                    if (ticks>5) {
+                        clearInterval(anim);
+                        els.name.style.filter = "none";
+                    }
                 }, 50);
-                await new Promise(r => setTimeout(r, 350));
+                await wait(300);
             }
 
-            // Perform Calculations
-            const result = getRandomAura();
-
-            // Cutscene (only if not skipping anim)
-            if (result.cutscene && !skipAnim && !state.autoRoll) {
-                if (state.autoRoll) toggleAutoRoll();
-                await playCutscene(result);
+            let baseLuck = 1;
+            if ((state.totalRolls + 1) % 10 === 0) baseLuck = 2;
+            
+            let auraBoost = 1;
+            if (state.equippedAura && BOOST_MULTIPLIERS[state.equippedAura]) {
+                auraBoost = BOOST_MULTIPLIERS[state.equippedAura];
+            }
+            
+            const totalLuck = baseLuck * auraBoost;
+            
+            let result = AURAS[0];
+            const sorted = [...AURAS].sort((a,b) => b.chance - a.chance);
+            
+            for (let aura of sorted) {
+                const effectiveChance = Math.max(1, aura.chance / totalLuck);
+                if (Math.random() * effectiveChance < 1) {
+                    result = aura;
+                    break;
+                }
             }
 
-            // Update State
             state.totalRolls++;
-            
-            if (!state.inventory[result.id]) state.inventory[result.id] = 0;
-            state.inventory[result.id]++;
-
-            if (!state.bestAura || result.chance > state.bestAura.chance) {
-                state.bestAura = result;
+            if (!state.inventory[result.id]) {
+                state.inventory[result.id] = { count: 0, isFavorite: false };
             }
-
+            state.inventory[result.id].count++;
+            if (!state.bestAura || result.chance > state.bestAura.chance) state.bestAura = result;
+            
             saveData();
-            updateStatsUI(false); // Reset UI to show next roll status
-            displayResult(result);
-            
-            if (!els.drawer.classList.contains('translate-y-full')) {
-                renderInventory();
+            updateStatsUI();
+
+            if (result.cutscene && !skipAnim) {
+                if (state.autoRoll) toggleAutoRoll();
+                els.rollBtn.disabled = true;
+                await playCutscene(result);
+                els.rollBtn.disabled = state.autoRoll || isOnCooldown;
             }
 
+            displayResult(result);
+            if (!els.drawer.classList.contains('translate-y-full')) renderInventory();
             isRolling = false;
         }
 
-        function displayResult(aura) {
-            els.name.innerText = aura.name;
-            els.name.className = `text-5xl md:text-8xl font-bold tracking-wider mb-4 ${aura.color} transition-all duration-300 drop-shadow-2xl`;
-            els.name.animate([{transform: 'scale(1)'}, {transform: 'scale(1.1)'}, {transform: 'scale(1)'}], {duration: 150});
-
-            els.chance.innerText = `1 in ${aura.chance.toLocaleString()}`;
-            els.desc.innerText = aura.desc;
-            els.desc.className = `text-sm md:text-base text-gray-400 mt-4 max-w-lg mx-auto ${aura.color}`;
-
-            els.glow.style.backgroundColor = aura.hex;
-            els.glow.style.opacity = aura.chance > 1000 ? '0.4' : '0.1';
-
-            if(aura.particle) spawnParticles(aura);
+        // --- ЭКИПИРОВКА АУР ---
+        function toggleEquipAura(auraId) {
+            if (!state.inventory[auraId] || state.inventory[auraId].count === 0) return;
+            
+            const aura = AURAS.find(a => a.id === auraId);
+            if (!aura.hasBoost) {
+                alert('Эта аура не дает буста удачи!');
+                return;
+            }
+            
+            if (state.equippedAura === auraId) {
+                state.equippedAura = null;
+            } else {
+                state.equippedAura = auraId;
+            }
+            
+            saveData();
+            updateEquippedDisplay();
+            renderInventory();
+            updateStatsUI();
         }
 
-        // --- Particles ---
+        function updateEquippedDisplay() {
+            if (state.equippedAura) {
+                const aura = AURAS.find(a => a.id === state.equippedAura);
+                const multiplier = BOOST_MULTIPLIERS[state.equippedAura];
+                
+                els.equippedName.textContent = aura.name;
+                els.equippedName.className = `font-bold ml-1 ${aura.color}`;
+                els.equippedMult.textContent = `x${multiplier.toFixed(1)}`;
+                els.equippedDisplay.classList.remove('hidden');
+            } else {
+                els.equippedDisplay.classList.add('hidden');
+            }
+        }
+
+        // --- VISUAL LOGIC ---
+
+        function displayResult(aura, isInit = false) {
+            els.name.innerText = aura.name;
+            els.name.className = `aura-base text-5xl md:text-8xl font-bold tracking-wider mb-6 ${aura.color} drop-shadow-2xl`;
+            els.chance.innerText = `1 in ${formatNumber(aura.chance)}`;
+            els.desc.innerText = aura.desc;
+            els.glow.style.backgroundColor = aura.hex;
+            els.glow.style.opacity = aura.chance >= 400000 ? '0.5' : '0.15';
+            
+            spawnParticles(aura);
+
+            if(!isInit) {
+                els.name.animate([
+                    { transform: 'scale(0.5)', opacity: 0 },
+                    { transform: 'scale(1.1)', opacity: 1 },
+                    { transform: 'scale(1)' }
+                ], { duration: 400, easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' });
+            }
+        }
+
+        async function playCutscene(aura) {
+            // ... (cutscene код остается без изменений) ...
+            const ol = els.cutscene.overlay;
+            const vis = els.cutscene.visual;
+            const info = els.cutscene.info;
+            
+            ol.style.display = 'flex';
+            vis.innerHTML = '';
+            info.style.opacity = '0';
+            
+            els.cutscene.title.innerText = aura.name;
+            els.cutscene.title.className = `text-6xl md:text-9xl font-bold mb-4 ${aura.color}`;
+            els.cutscene.subtitle.innerText = `1 in ${formatNumber(aura.chance)}`;
+
+            if (aura.id === 'crazy') {
+                ol.style.animation = 'crazy-flash-bg 2s infinite linear';
+                const glitch = document.createElement('div');
+                glitch.innerHTML = '<i class="fa-solid fa-face-dizzy"></i>';
+                glitch.className = 'text-9xl text-white';
+                glitch.style.animation = 'crazy-glitch-icon 0.5s infinite steps(5)';
+                vis.appendChild(glitch);
+                await wait(2500);
+                ol.style.animation = 'none'; ol.style.background = 'black';
+
+            } else if (aura.id === 'unreal') {
+                ol.style.animation = 'unreal-bg 3s forwards';
+                const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                star.setAttribute('viewBox', '0 0 100 100');
+                star.style.width = '300px';
+                star.style.height = '300px';
+                star.style.overflow = 'visible';
+                star.innerHTML = '<path id="starPath" d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z" fill="white" />';
+                const path = star.querySelector('#starPath');
+                path.style.animation = 'unreal-star-expand 3s linear forwards';
+                vis.appendChild(star);
+                await wait(3000);
+
+            } else if (aura.id === 'matrix') {
+                ol.style.background = 'black';
+                for(let i=0; i<30; i++) {
+                    const col = document.createElement('div');
+                    col.className = 'matrix-col';
+                    col.innerText = Array(20).fill(0).map(()=>String.fromCharCode(0x30A0 + Math.random()*96)).join('\n');
+                    col.style.left = Math.random()*100 + 'vw';
+                    col.style.animationDuration = (1 + Math.random()*2) + 's';
+                    col.style.fontSize = (15 + Math.random()*20) + 'px';
+                    vis.appendChild(col);
+                }
+                await wait(3000);
+
+            } else if (aura.id === 'solaris') {
+                const sun = document.createElement('div');
+                sun.style.cssText = "width: 200px; height: 200px; border-radius: 50%; background: #fdba74; animation: solaris-implode 3s ease-in-out forwards;";
+                vis.appendChild(sun);
+                await wait(3000);
+
+            } else if (aura.id === 'hypernova') {
+                const supernova = document.createElement('div');
+                supernova.style.cssText = "width: 200px; height: 200px; border-radius: 50%; background: #ec4899; animation: hypernova-explode 3s ease-out forwards;";
+                vis.appendChild(supernova);
+                await wait(3000);
+
+            } else if (aura.id === 'archangel') {
+                const wings = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                wings.setAttribute('viewBox', '0 0 200 200');
+                wings.style.width = '500px';
+                wings.style.overflow = 'visible';
+                wings.innerHTML = `
+                    <defs>
+                        <filter id="goldGlow"><feGaussianBlur stdDeviation="5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                    </defs>
+                    <g style="animation: archangel-wings 3s ease-out forwards; transform-origin: center;" filter="url(#goldGlow)">
+                        <path d="M100 100 Q 40 20 20 60 Q 60 80 80 120 Q 60 140 20 140 Q 40 180 100 100" fill="#fbbf24"/>
+                        <path d="M100 100 Q 160 20 180 60 Q 140 80 120 120 Q 140 140 180 140 Q 160 180 100 100" fill="#fbbf24"/>
+                        <path d="M100 100 Q 50 40 30 80 Q 70 100 90 140 Q 70 160 30 160 Q 50 200 100 100" fill="#fbbf24" opacity="0.8"/>
+                        <path d="M100 100 Q 150 40 170 80 Q 130 100 110 140 Q 130 160 170 160 Q 150 200 100 100" fill="#fbbf24" opacity="0.8"/>
+                    </g>
+                `;
+                vis.appendChild(wings);
+                await wait(3000);
+
+            } else if (aura.id === 'theend') {
+                ol.style.animation = 'theend-void 3s forwards';
+                const voidText = document.createElement('div');
+                voidText.innerText = 'VOID';
+                voidText.className = 'text-9xl font-bold text-white';
+                voidText.style.animation = 'void-shake 0.1s infinite';
+                vis.appendChild(voidText);
+                await wait(3000);
+
+            } else if (aura.id === 'infinity') {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute('viewBox', '0 0 300 150');
+                svg.style.width = '80vw'; svg.style.maxWidth = '600px';
+                
+                const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+                defs.innerHTML = `<linearGradient id="rainbowGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff0000"/><stop offset="20%" stop-color="#ffff00"/><stop offset="40%" stop-color="#00ff00"/><stop offset="60%" stop-color="#00ffff"/><stop offset="80%" stop-color="#0000ff"/><stop offset="100%" stop-color="#ff00ff"/></linearGradient>`;
+                svg.appendChild(defs);
+
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", "M 150 75 C 100 10, 50 10, 50 75 C 50 140, 100 140, 150 75 C 200 10, 250 10, 250 75 C 250 140, 200 140, 150 75");
+                path.setAttribute("fill", "none");
+                path.setAttribute("stroke", "url(#rainbowGrad)");
+                path.setAttribute("stroke-width", "8");
+                path.setAttribute("stroke-linecap", "round");
+                path.setAttribute("stroke-dasharray", "800");
+                path.setAttribute("stroke-dashoffset", "800");
+                path.style.animation = "infinity-draw-path 2.5s ease-out forwards, infinity-rotate-hue 3s linear infinite";
+                path.style.filter = "drop-shadow(0 0 10px white)";
+                
+                svg.appendChild(path);
+                vis.appendChild(svg);
+                await wait(3000);
+
+            } else if (aura.id === 'transcendent') {
+                ol.style.background = '#001122';
+                const orb = document.createElement('div');
+                orb.style.cssText = "width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(to top, #22d3ee, #fff); animation: transcendent-glow 3s ease-out forwards;";
+                vis.appendChild(orb);
+                await wait(3000);
+
+            } else {
+                ol.style.background = 'white';
+                const f = document.createElement('div');
+                f.style.cssText = "width:100%; height:100%; background:black; animation: solaris-implode 2s reverse;";
+                vis.appendChild(f);
+                await wait(2000);
+            }
+
+            vis.style.opacity = '0';
+            vis.style.transition = 'opacity 0.5s';
+            
+            const flash = document.createElement('div');
+            flash.className = 'absolute inset-0 bg-white z-50 pointer-events-none';
+            ol.appendChild(flash);
+            flash.animate([{opacity:1}, {opacity:0}], {duration: 800}).onfinish = ()=>flash.remove();
+
+            info.style.opacity = '1';
+            info.style.transform = 'scale(1)';
+            
+            await wait(2500);
+            ol.style.display = 'none';
+        }
+
         function spawnParticles(aura) {
             els.particles.innerHTML = '';
             if(particleInterval) clearInterval(particleInterval);
@@ -366,208 +776,254 @@
             particleInterval = setInterval(() => {
                 const p = document.createElement('div');
                 p.classList.add('particle');
-                const size = Math.random() * 5 + 2;
-                p.style.width = `${size}px`; p.style.height = `${size}px`;
-                p.style.left = `${Math.random()*100}vw`;
-
-                if(aura.particle === 'snow') {
-                    p.style.background = 'white'; p.style.top = '-10px';
-                    p.animate([{transform: 'translateY(0)'}, {transform: `translateY(110vh)`}], {duration: 3000, easing: 'linear'}).onfinish = ()=>p.remove();
-                } else if (aura.particle === 'ember') {
-                    p.style.background = 'orange'; p.style.bottom = '-10px';
-                    p.animate([{transform: 'translateY(0)', opacity: 1}, {transform: `translateY(-100vh)`, opacity: 0}], {duration: 2000}).onfinish = ()=>p.remove();
+                const size = Math.random() * 5 + 3;
+                p.style.width = size + 'px'; p.style.height = size + 'px';
+                
+                if (aura.particle === 'snow') {
+                    p.style.background = 'white'; p.style.left = Math.random()*100+'vw'; p.style.top = '-10px';
+                    p.animate([{transform: 'translateY(110vh) rotate(360deg)'}], {duration: 3000}).onfinish=()=>p.remove();
+                } else if (aura.particle === 'void') {
+                    p.style.background = '#a855f7'; p.style.left = Math.random()*100+'vw'; p.style.top = Math.random()*100+'vh';
+                    p.animate([{transform: 'scale(0)'}, {transform: 'scale(1)'}, {transform: 'scale(0)'}], {duration: 1500}).onfinish=()=>p.remove();
+                } else if (aura.particle === 'code') {
+                    p.innerText = Math.random() > 0.5 ? '1' : '0'; p.style.color = '#0f0'; p.style.fontFamily = 'monospace';
+                    p.style.left = Math.random()*100+'vw'; p.style.top = '-10px';
+                    p.animate([{transform: 'translateY(110vh)'}], {duration: 2000}).onfinish=()=>p.remove();
+                } else if (aura.particle === 'rainbow') {
+                    const colors = ['#f00','#0f0','#00f','#ff0'];
+                    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+                    p.style.left = Math.random()*100+'vw'; p.style.top = Math.random()*100+'vh';
+                    p.animate([{opacity:0},{opacity:1},{opacity:0}], {duration: 1000}).onfinish=()=>p.remove();
                 } else {
-                     p.style.background = aura.hex; p.style.top = `${Math.random()*100}vh`;
-                     p.animate([{opacity: 0}, {opacity: 1}, {opacity: 0}], {duration: 1000}).onfinish = ()=>p.remove();
+                    p.style.background = aura.hex; p.style.left = Math.random()*100+'vw'; p.style.bottom = '-10px';
+                    p.animate([{transform: 'translateY(-110vh)', opacity: 0}], {duration: 3000}).onfinish=()=>p.remove();
                 }
                 els.particles.appendChild(p);
-            }, 150);
+            }, 100);
         }
 
-        // --- UI Updates ---
-        function updateStatsUI(previewNext = false) {
+        // --- UTILS & DATA ---
+        function updateStatsUI() {
             els.totalRolls.innerText = state.totalRolls.toLocaleString();
             
-            // Determine Luck to display
-            // If previewNext is true (during animation), we show the luck used for THAT roll
-            // If previewNext is false (idle), we show the luck for the UPCOMING roll
-            let luckRollCount = state.totalRolls + (previewNext ? 0 : 1);
-            let luck = 1;
-
-            if (luckRollCount % 10 === 0 && luckRollCount > 0) {
-                luck = 2;
-                els.bonusInfo.classList.remove('hidden');
-                els.bonusInfo.innerText = "X2 (EVERY 10TH) ACTIVE!";
-            } else {
-                els.bonusInfo.classList.add('hidden');
+            // Рассчитываем базовый буст (только от прогресса 10/10)
+            const isBaseBoost = (state.totalRolls + 1) % 10 === 0;
+            const baseLuck = isBaseBoost ? 2 : 1;
+            
+            // Рассчитываем буст от экипированной ауры
+            let auraBoost = 1;
+            if (state.equippedAura && BOOST_MULTIPLIERS[state.equippedAura]) {
+                auraBoost = BOOST_MULTIPLIERS[state.equippedAura];
             }
-
-            els.luckMult.innerText = `x${luck.toFixed(1)}`;
-            els.luckMult.className = luck > 1 ? "text-lg font-bold text-green-400 drop-shadow-[0_0_5px_rgba(74,222,128,0.8)]" : "text-lg font-bold text-gray-400";
+            
+            // Общий множитель удачи
+            const totalLuck = baseLuck * auraBoost;
+            
+            // Отображаем общий множитель
+            els.luckMult.innerText = `x${totalLuck.toFixed(1)}`;
+            
+            // ПОПРАВЛЕННАЯ ЛОГИКА: "X2 BOOST!" показываем ТОЛЬКО когда есть базовый буст (10/10)
+            // Не важно, есть ли экипированная аура или нет
+            els.bonusInfo.classList.toggle('hidden', !isBaseBoost);
+            
+            // Прогресс 1-10
+            let progress = (state.totalRolls % 10) + 1;
+            els.luckProgress.innerText = `${progress}/10`;
+            
+            // Подсвечиваем когда достигнут прогресс 10/10
+            if (progress === 10) {
+                els.luckProgress.classList.add('text-green-400');
+                els.luckProgress.classList.remove('text-yellow-400');
+            } else {
+                els.luckProgress.classList.remove('text-green-400');
+                els.luckProgress.classList.add('text-yellow-400');
+            }
         }
 
         function renderInventory() {
             els.invGrid.innerHTML = '';
-            const collectedIds = Object.keys(state.inventory);
-            const collectedAuras = collectedIds.map(id => AURAS.find(a => a.id === id)).filter(a=>a).sort((a, b) => b.chance - a.chance);
-
-            if (collectedAuras.length === 0) {
-                els.invGrid.innerHTML = '<div class="col-span-full text-center text-gray-500 mt-10">Пусто...</div>';
-                return;
+            const ids = Object.keys(state.inventory);
+            if(ids.length === 0) { 
+                els.invGrid.innerHTML = '<div class="text-gray-500 col-span-full text-center mt-10">Empty...</div>'; 
+                return; 
             }
-
-            collectedAuras.forEach(aura => {
-                const count = state.inventory[aura.id];
-                if(count <= 0) return;
+            
+            ids.map(id => AURAS.find(a => a.id === id))
+               .filter(aura => aura) // Фильтруем undefined
+               .sort((a,b) => b.chance - a.chance)
+               .forEach(aura => {
+                const item = state.inventory[aura.id];
+                if (item.count <= 0) return;
                 
                 const card = document.createElement('div');
-                let borderClass = aura.chance > 1000 ? 'border-gray-600' : 'border-gray-800';
-                if (aura.tier >= 3) borderClass = 'border-purple-500 shadow-[0_0_10px_#a855f7]';
+                card.className = `inv-card cursor-pointer ${state.equippedAura === aura.id ? 'equipped' : ''}`;
+                card.style.color = aura.hex;
+                if(aura.chance>=400000) card.style.borderColor = 'rgba(168,85,247,0.5)';
                 
-                card.className = `inv-card bg-[#1a1a20] p-2 rounded-lg border ${borderClass} flex flex-col items-center relative group cursor-pointer transition-all duration-200`;
                 card.innerHTML = `
-                    <div class="absolute top-1 right-2 text-[10px] text-gray-400">x${count}</div>
-                    <div class="h-10 w-10 rounded-full mb-2 flex items-center justify-center bg-black/40 mt-2">
-                        <i class="fa-solid fa-circle ${aura.color} text-lg filter blur-[1px]"></i>
-                    </div>
-                    <div class="font-bold text-xs ${aura.color} text-center mb-1">${aura.name}</div>
-                    <div class="text-[9px] text-gray-500">1/${formatNumber(aura.chance)}</div>
+                    <div class="aura-effect ${aura.color}">${aura.name}</div>
+                    <div class="aura-count">x${item.count}</div>
                 `;
-                card.onclick = () => {
-                    displayResult(aura);
-                    toggleDrawer();
+
+                // Экипировка ауры (только если имеет буст) - В ЛЕВОМ ВЕРХНЕМ УГЛУ
+                if (aura.hasBoost) {
+                    const equipIcon = document.createElement('div');
+                    equipIcon.className = 'icon-top-left';
+                    equipIcon.innerHTML = `<i class="fa-solid ${state.equippedAura === aura.id ? 'fa-star text-yellow-400' : 'fa-star text-white'}"></i>`;
+                    equipIcon.title = state.equippedAura === aura.id ? 'Снять ауру' : 'Экипировать как буст';
+                    equipIcon.onclick = (e) => {
+                        e.stopPropagation();
+                        toggleEquipAura(aura.id);
+                    };
+                    card.appendChild(equipIcon);
+                }
+
+                // Favorite icon - В ПРАВОМ ВЕРХНЕМ УГЛУ
+                const favIcon = document.createElement('div');
+                favIcon.className = 'icon-top-right';
+                favIcon.innerHTML = `<i class="fa-heart ${item.isFavorite ? 'fa-solid text-red-500' : 'fa-regular text-white'}"></i>`;
+                favIcon.title = item.isFavorite ? 'Убрать из избранного' : 'Добавить в избранное';
+                favIcon.onclick = (e) => {
+                    e.stopPropagation();
+                    item.isFavorite = !item.isFavorite;
+                    saveData();
+                    renderInventory();
                 };
+                card.appendChild(favIcon);
+
+                // Delete icon - В ЛЕВОМ НИЖНЕМ УГЛУ
+                const delIcon = document.createElement('div');
+                delIcon.className = 'icon-bottom-left';
+                delIcon.innerHTML = `<i class="fa-solid fa-trash text-red-500"></i>`;
+                delIcon.title = 'Удалить одну копию';
+                delIcon.onclick = (e) => {
+                    e.stopPropagation();
+                    if (item.isFavorite && item.count === 1) {
+                        alert("Cannot delete last instance of favorite aura!");
+                        return;
+                    }
+                    item.count--;
+                    if (item.count === 0) {
+                        delete state.inventory[aura.id];
+                        if (state.equippedAura === aura.id) {
+                            state.equippedAura = null;
+                            updateEquippedDisplay();
+                        }
+                    }
+                    saveData();
+                    recalculateBestAura();
+                    renderInventory();
+                    if (state.bestAura) displayResult(state.bestAura, true);
+                    else displayResult(AURAS[0], true);
+                };
+                card.appendChild(delIcon);
+
+                card.onclick = () => { 
+                    displayResult(aura); 
+                    if (!aura.hasBoost) {
+                        toggleDrawer(); 
+                    }
+                };
+                
+                if (aura.hasBoost) {
+                    const boostValue = BOOST_MULTIPLIERS[aura.id];
+                    card.title = `Буст удачи: x${boostValue.toFixed(1)}\n${aura.desc}`;
+                } else {
+                    card.title = aura.desc;
+                }
+                
                 els.invGrid.appendChild(card);
             });
         }
 
-        // --- Utils ---
-        function toggleDrawer() {
-            if (els.drawer.classList.contains('translate-y-full')) {
-                els.drawer.classList.remove('translate-y-full');
-                renderInventory();
-            } else {
-                els.drawer.classList.add('translate-y-full');
-            }
-        }
-
-        function toggleAutoRoll() {
-            state.autoRoll = !state.autoRoll;
-            if (state.autoRoll) {
-                // Auto Roll ON
-                els.autoBtn.classList.add('border-green-500', 'bg-green-900/20');
-                document.getElementById('auto-status').innerText = "ON";
-                document.getElementById('auto-status').className = "text-green-500 ml-1";
-                
-                // Disable main roll button
-                els.rollBtn.disabled = true;
-                els.rollBtn.classList.add('opacity-50', 'cursor-not-allowed');
-
-                autoInterval = setInterval(() => { if (!isRolling) performRoll(); }, 1000); 
-            } else {
-                // Auto Roll OFF
-                els.autoBtn.classList.remove('border-green-500', 'bg-green-900/20');
-                document.getElementById('auto-status').innerText = "OFF";
-                document.getElementById('auto-status').className = "text-red-500 ml-1";
-                
-                // Enable main roll button (if not cooling down)
-                if (!isOnCooldown) els.rollBtn.disabled = false;
-                els.rollBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-
-                clearInterval(autoInterval);
-            }
-        }
-
-        function formatNumber(num) {
-            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
-            return num;
-        }
-
-        // --- Cutscene ---
-        function playCutscene(aura) {
-            return new Promise((resolve) => {
-                const ol = document.getElementById('cutscene-overlay');
-                const star = document.getElementById('cutscene-star');
-                const text = document.getElementById('cutscene-text');
-                const chance = document.getElementById('cutscene-chance');
-
-                ol.style.display = 'flex';
-                star.style.opacity = 1; star.style.transform = 'scale(0)';
-                text.style.opacity = 0; text.style.transform = 'scale(0)';
-                chance.style.opacity = 0;
-                
-                star.style.background = aura.hex;
-                star.style.boxShadow = `0 0 50px ${aura.hex}`;
-
-                star.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 1000 }).onfinish = () => {
-                    star.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.1)' }], { duration: 1500, easing: 'ease-in-out' }).onfinish = () => {
-                        star.style.opacity = 0;
-                        const f = document.createElement('div'); f.className='absolute inset-0 bg-white z-[101]';
-                        ol.appendChild(f);
-                        f.animate([{opacity:1},{opacity:0}], {duration:800}).onfinish=()=>f.remove();
-
-                        text.innerHTML = aura.name;
-                        text.className = `mt-8 text-6xl md:text-9xl font-bold ${aura.color}`;
-                        text.animate([{ opacity: 0, transform: 'scale(3)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, fill: 'forwards' });
-                        
-                        setTimeout(() => {
-                            chance.innerText = "1 in " + aura.chance.toLocaleString();
-                            chance.style.opacity = 1;
-                        }, 500);
-
-                        setTimeout(() => {
-                            ol.style.display = 'none';
-                            resolve();
-                        }, 2500);
-                    };
-                };
-            });
-        }
-
-        // --- Save/Load (Cleaned) ---
-        function saveData() {
-            const data = {
-                v: 4, // Bump version to force reset of bad data if needed or just track
-                r: state.totalRolls,
-                inv: state.inventory,
-                best: state.bestAura ? state.bestAura.id : null
-            };
-            localStorage.setItem('etherRngSaveV4', JSON.stringify(data));
-        }
-
-        function loadData() {
-            let saved = localStorage.getItem('etherRngSaveV4');
-            // Try migration from V3 (the alchemy version)
-            if (!saved) {
-                const old = localStorage.getItem('etherRngSaveV3');
-                if (old) {
-                    try {
-                        const o = JSON.parse(old);
-                        state.totalRolls = o.r || 0;
-                        state.inventory = o.inv || {};
-                        if(o.best) state.bestAura = AURAS.find(a=>a.id === o.best);
-                        saveData();
-                    } catch(e) {}
+        function recalculateBestAura() {
+            let maxChance = 0;
+            let best = null;
+            for (let id in state.inventory) {
+                if (state.inventory[id].count > 0) {
+                    const a = AURAS.find(a => a.id === id);
+                    if (a && a.chance > maxChance) {
+                        maxChance = a.chance;
+                        best = a;
+                    }
                 }
             }
+            state.bestAura = best;
+        }
 
-            if(saved) {
-                try {
-                    const p = JSON.parse(saved);
-                    state.totalRolls = p.r || 0;
-                    state.inventory = p.inv || {};
-                    if(p.best) state.bestAura = AURAS.find(a=>a.id === p.best);
-                } catch(e) { console.error("Save Error", e); }
+        function toggleDrawer() { 
+            els.drawer.classList.toggle('translate-y-full'); 
+            if(!els.drawer.classList.contains('translate-y-full')) renderInventory(); 
+        }
+        
+        function toggleAutoRoll() { 
+            state.autoRoll = !state.autoRoll; 
+            els.autoBtn.classList.toggle('text-green-400', state.autoRoll);
+            els.rollBtn.disabled = state.autoRoll;
+            if(state.autoRoll) autoInterval = setInterval(()=>performRoll(), 1000);
+            else clearInterval(autoInterval);
+        }
+
+        function clearNonFavorites() {
+            if (confirm('Delete all non-favorite auras?')) {
+                for (let id in state.inventory) {
+                    if (!state.inventory[id].isFavorite) {
+                        delete state.inventory[id];
+                        if (state.equippedAura === id) {
+                            state.equippedAura = null;
+                            updateEquippedDisplay();
+                        }
+                    }
+                }
+                recalculateBestAura();
+                saveData();
+                renderInventory();
+                if (state.bestAura) displayResult(state.bestAura, true);
+                else displayResult(AURAS[0], true);
             }
         }
 
-        function clearData() {
-            if(confirm("Стереть все?")) {
-                localStorage.removeItem('etherRngSaveV4');
-                location.reload();
-            }
+        function saveData() { 
+            localStorage.setItem('rng_v6', JSON.stringify({ 
+                r: state.totalRolls, 
+                i: state.inventory,
+                e: state.equippedAura 
+            })); 
         }
+        
+        function loadData() { 
+            try { 
+                const d = JSON.parse(localStorage.getItem('rng_v6')); 
+                if(d) { 
+                    state.totalRolls = d.r || 0; 
+                    state.inventory = {};
+                    state.equippedAura = d.e || null;
+                    
+                    for (let id in d.i) {
+                        if (typeof d.i[id] === 'number') {
+                            state.inventory[id] = { count: d.i[id], isFavorite: false };
+                        } else {
+                            state.inventory[id] = { count: d.i[id].count || 0, isFavorite: d.i[id].isFavorite || false };
+                        }
+                    }
+                }
+            } catch(e){} 
+        }
+        
+        function clearData() { 
+            if(confirm('Delete all progress?')) { 
+                localStorage.removeItem('rng_v6'); 
+                location.reload(); 
+            } 
+        }
+        
+        function formatNumber(n) { 
+            if(n>=1e6) return (n/1e6).toFixed(1)+'M'; 
+            if(n>=1e3) return (n/1e3).toFixed(0)+'k'; 
+            return n; 
+        }
+        
+        const wait = (ms) => new Promise(r => setTimeout(r, ms));
 
         init();
     </script>
