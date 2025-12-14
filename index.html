@@ -328,12 +328,17 @@
     <!-- Header -->
     <header class="w-full p-4 bg-[#0a0a0c] border-b border-gray-800 z-10 shadow-lg flex-shrink-0">
         <div class="flex justify-between items-center mb-2">
-            <div class="flex items-center">
+            <div class="flex items-center gap-2">
                 <h1 class="text-1.5xl md:text-2xl font-bold italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-purple-500 to-pink-500">Omega star RNG ✦</h1>
             </div>
-            <div class="text-right">
-                <p class="text-[10px] text-gray-500 uppercase">Rolls</p>
-                <p id="total-rolls" class="font-mono text-xl text-white">0</p>
+            <div class="flex items-center gap-4">
+                 <button id="mute-btn" class="text-gray-400 hover:text-white transition-colors" title="Toggle Sound">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                <div class="text-right">
+                    <p class="text-[10px] text-gray-500 uppercase">Rolls</p>
+                    <p id="total-rolls" class="font-mono text-xl text-white">0</p>
+                </div>
             </div>
         </div>
         <div class="flex justify-between items-end border-t border-gray-800 pt-2">
@@ -405,6 +410,40 @@
     </div>
 
     <script>
+        // --- SOUNDS SYSTEM ---
+        const AUDIO_FILES = {
+            tick: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/buttonsound.wav',
+            close: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/close.wav',
+            delete: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/deleting%20all%20inventory%20or%201%20item.wav',
+            get: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/getting%20pet%20or%20seed.wav',
+            equip: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/hatchegg.wav'
+        };
+
+        const sounds = {};
+        let isMuted = false;
+
+        // Preload sounds
+        for (const [key, url] of Object.entries(AUDIO_FILES)) {
+            const audio = new Audio(url);
+            audio.volume = 0.4; // Default volume
+            if(key === 'tick') audio.volume = 0.2; // Tick is often loud/repetitive
+            sounds[key] = audio;
+        }
+
+        function playSound(key) {
+            if (isMuted || !sounds[key]) return;
+            // Stop and rewind if already playing (crucial for ticks)
+            sounds[key].pause();
+            sounds[key].currentTime = 0;
+            sounds[key].play().catch(e => console.log('Audio error:', e));
+        }
+
+        document.getElementById('mute-btn').addEventListener('click', function() {
+            isMuted = !isMuted;
+            this.innerHTML = isMuted ? '<i class="fa-solid fa-volume-xmark text-red-500"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+        });
+
+
         // --- CONFIGURATION ---
         const BOOST_MULTIPLIERS = {
             'vortex': 1.05,
@@ -431,7 +470,7 @@
             { id: 'epic', name: 'EPIC', chance: 64, color: 'aura-epic', hex: '#a855f7', desc: 'Магический след.' },
             { id: 'pyromaniac', name: 'PYROMANIAC', chance: 150, color: 'aura-pyromaniac', hex: '#f97316', desc: 'Искра пламени.' },
             { id: 'glacial', name: 'GLACIAL', chance: 500, color: 'aura-glacial', hex: '#22d3ee', desc: 'Холодное сердце.', particle: 'snow' },
-            { id: 'magnetic', name: 'MAGNETIC', chance: 1200, color: 'aura-magnetic', hex: '#94a3b8', desc: 'Притяжение.' },
+            { id: 'magnetic', name: 'MAGNETIC', chance: 1000, color: 'aura-magnetic', hex: '#94a3b8', desc: 'Притяжение.' },
             { id: 'vortex', name: 'VORTEX', chance: 2500, color: 'aura-vortex', hex: '#10b981', desc: 'Торнадо.', particle: 'wind', hasBoost: true },
             { id: 'demon', name: 'DEMON', chance: 13000, color: 'aura-demon', hex: '#dc2626', desc: 'Гнев преисподней.', particle: 'ember', hasBoost: true },
             { id: 'permafrost', name: 'PERMAFROST', chance: 25000, color: 'aura-permafrost', hex: '#0ea5e9', desc: 'Вечный лед.', particle: 'snow', hasBoost: true },
@@ -446,9 +485,9 @@
             { id: 'transcendent', name: 'TRANSCENDENT', chance: 2000000, color: 'aura-transcendent', hex: '#22d3ee', desc: 'Чистая энергия.', cutscene: true, particle: 'light', hasBoost: true },
             { id: 'solaris', name: 'SOLARIS', chance: 3500000, color: 'aura-solaris', hex: '#f97316', desc: 'Сверхновая звезда.', cutscene: true, particle: 'sun', hasBoost: true },
             { id: 'hypernova', name: 'HYPERNOVA', chance: 8000000, color: 'aura-hypernova', hex: '#ec4899', desc: 'Галактический шторм.', cutscene: true, particle: 'galaxy', hasBoost: true },
-            { id: 'archangel', name: 'ARCHANGEL', chance: 15000000, color: 'aura-archangel', hex: '#fbbf24', desc: 'Божественное вмешательство.', cutscene: true, particle: 'feather', hasBoost: true },
-            { id: 'theend', name: 'THE END', chance: 35000000, color: 'aura-theend', hex: '#000000', desc: 'Ничто.', cutscene: true, particle: 'glitch', hasBoost: true },
-            { id: 'infinity', name: 'INFINITY', chance: 99999999, color: 'aura-infinity', hex: '#ffffff', desc: 'Я ЕСТЬ НАЧАЛО И КОНЕЦ.', cutscene: true, particle: 'rainbow', hasBoost: true }
+            { id: 'archangel', name: 'ARCHANGEL', chance: 7777777, color: 'aura-archangel', hex: '#fbbf24', desc: 'Божественное вмешательство.', cutscene: true, particle: 'feather', hasBoost: true },
+            { id: 'theend', name: 'THE END', chance: 9999999, color: 'aura-theend', hex: '#000000', desc: 'Ничто.', cutscene: true, particle: 'glitch', hasBoost: true },
+            { id: 'infinity', name: 'INFINITY', chance: 10000000, color: 'aura-infinity', hex: '#ffffff', desc: 'Я ЕСТЬ НАЧАЛО И КОНЕЦ.', cutscene: true, particle: 'rainbow', hasBoost: true }
         ];
 
         let state = { 
@@ -515,6 +554,9 @@
                 const anim = setInterval(() => {
                     els.name.innerText = AURAS[Math.floor(Math.random()*5)].name;
                     els.name.style.filter = "blur(4px)";
+                    // SOUND: Tick during roll
+                    playSound('tick'); 
+                    
                     ticks++;
                     if (ticks>5) {
                         clearInterval(anim);
@@ -563,6 +605,9 @@
             }
 
             displayResult(result);
+            // SOUND: Success/Get
+            playSound('get');
+
             if (!els.drawer.classList.contains('translate-y-full')) renderInventory();
             isRolling = false;
         }
@@ -577,6 +622,9 @@
                 return;
             }
             
+            // SOUND: Equip/Hatch (duller sound)
+            playSound('equip');
+
             if (state.equippedAura === auraId) {
                 state.equippedAura = null;
             } else {
@@ -898,6 +946,9 @@
                 delIcon.title = 'Удалить одну копию';
                 delIcon.onclick = (e) => {
                     e.stopPropagation();
+                    // SOUND: Delete
+                    playSound('delete');
+
                     if (item.isFavorite && item.count === 1) {
                         alert("Cannot delete last instance of favorite aura!");
                         return;
@@ -952,6 +1003,13 @@
         }
 
         function toggleDrawer() { 
+            // SOUND: Open/Close Drawer (Use Equip/Hatch for open, Close for close)
+            if(els.drawer.classList.contains('translate-y-full')) {
+                playSound('equip'); // Opening
+            } else {
+                playSound('close'); // Closing
+            }
+
             els.drawer.classList.toggle('translate-y-full'); 
             if(!els.drawer.classList.contains('translate-y-full')) renderInventory(); 
         }
@@ -966,6 +1024,8 @@
 
         function clearNonFavorites() {
             if (confirm('Delete all non-favorite auras?')) {
+                // SOUND: Delete
+                playSound('delete');
                 for (let id in state.inventory) {
                     if (!state.inventory[id].isFavorite) {
                         delete state.inventory[id];
@@ -1012,6 +1072,8 @@
         
         function clearData() { 
             if(confirm('Delete all progress?')) { 
+                // SOUND: Delete
+                playSound('delete');
                 localStorage.removeItem('rng_v6'); 
                 location.reload(); 
             } 
