@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OSR: Rebalanced</title>
+    <title>OSR: New Year Update v2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -43,12 +43,19 @@
         }
         
         /* Low Tier - Simple */
-        .aura-common { color: #71717a; }
+        .aura-common { color: #a1a1aa; }
         .aura-uncommon { color: #4ade80; }
         .aura-rare { color: #3b82f6; }
         .aura-epic { color: #a855f7; }
         
-        /* New Auras Styles */
+        /* New Low Tiers */
+        .aura-wind { color: #d6d3d1; letter-spacing: 2px; opacity: 0.8; }
+        .aura-sand { color: #fde047; }
+        .aura-water { color: #0ea5e9; }
+        .aura-gilded { background: linear-gradient(to bottom, #facc15, #ca8a04); -webkit-background-clip: text; color: transparent; }
+        .aura-rose { color: #fb7185; }
+
+        /* Mid Tier */
         .aura-crystal { color: #e0f2fe; text-shadow: 0 0 15px #bae6fd, 0 0 30px #7dd3fc; }
         .aura-bloom { background: linear-gradient(to right, #f472b6, #fbcfe8); -webkit-background-clip: text; color: transparent; filter: drop-shadow(0 0 8px #f472b6); }
         .aura-toxic { color: #bef264; text-shadow: 0 0 15px #65a30d, 0 0 25px #3f6212; font-family: 'Share Tech Mono', monospace; }
@@ -79,10 +86,17 @@
         
         .aura-solaris { color: #fff7ed; text-shadow: 0 0 30px #f97316, 0 0 60px #ea580c, 0 0 90px #c2410c; }
         
+        /* Hypernova (Reverted + Improved Glow) */
         .aura-hypernova { background: linear-gradient(135deg, #fff, #ff00cc, #3333ff); -webkit-background-clip: text; color: transparent; animation: cosmic-pulse 2s infinite; }
         @keyframes cosmic-pulse { 0% { filter: drop-shadow(0 0 15px #ec4899); } 50% { filter: drop-shadow(0 0 35px #ec4899); } 100% { filter: drop-shadow(0 0 15px #ec4899); } }
 
-        .aura-archangel { color: #fef3c7; text-shadow: 0 0 30px #fbbf24, 0 0 60px #d97706, 0 0 100px #b45309; }
+        /* Archangel (Minimalist SVG Style) */
+        .aura-archangel { 
+            background: linear-gradient(to bottom, #ffffff, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+        }
         
         .aura-theend { color: black; -webkit-text-stroke: 1.5px white; text-shadow: 0 0 20px white; animation: void-shake 0.1s infinite; }
         @keyframes void-shake { 0% { transform: translate(1px, 1px); } 100% { transform: translate(-1px, -1px); } }
@@ -182,8 +196,15 @@
         .matrix-col { position: absolute; top: -100px; color: #0f0; font-family: 'Share Tech Mono', monospace; font-size: 20px; text-shadow: 0 0 5px #0f0; animation: matrix-fall linear forwards; opacity: 0.7; }
         @keyframes matrix-fall { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } to { transform: translateY(110vh); opacity: 0; } }
         @keyframes solaris-implode { 0% { transform: scale(5); opacity: 0; filter: brightness(0.5); } 40% { transform: scale(1); opacity: 1; background: #f97316; box-shadow: 0 0 100px #ea580c; filter: brightness(1.2); } 80% { transform: scale(0.8); background: #fff; box-shadow: 0 0 200px #fff; filter: brightness(2); } 100% { transform: scale(20); opacity: 0; filter: brightness(0); } }
+        
+        /* Hypernova Original Animation Restored */
         @keyframes hypernova-explode { 0% { transform: scale(0.1); opacity: 0; filter: brightness(0.5) blur(0px); box-shadow: 0 0 0 rgba(255,0,204,0.5); } 30% { transform: scale(1); opacity: 1; background: radial-gradient(circle, #fff 0%, #ff00cc 50%, #3333ff 100%); box-shadow: 0 0 100px #ff00cc; filter: brightness(1.5) blur(5px); } 70% { transform: scale(2); opacity: 0.8; background: radial-gradient(circle, #fff 0%, #ec4899 50%, #000 100%); box-shadow: 0 0 200px #ec4899; filter: brightness(2) blur(10px); } 100% { transform: scale(5); opacity: 0; filter: brightness(0) blur(20px); box-shadow: 0 0 300px rgba(236,72,153,0); } }
-        @keyframes archangel-wings { 0% { transform: scale(0.5) rotate(-10deg); opacity: 0; } 50% { transform: scale(1.2) rotate(10deg); opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        
+        @keyframes archangel-wings-reveal { 
+            0% { transform: scale(0.8) translateY(20px); opacity: 0; } 
+            100% { transform: scale(1) translateY(0); opacity: 1; } 
+        }
+        
         @keyframes theend-void { 0% { background: white; } 50% { background: gray; } 100% { background: black; } }
         @keyframes infinity-draw-path { to { stroke-dashoffset: 0; } }
         @keyframes infinity-rotate-hue { 0% { filter: hue-rotate(0deg) brightness(1); } 50% { filter: hue-rotate(180deg) brightness(1.5); } 100% { filter: hue-rotate(360deg) brightness(1); } }
@@ -263,12 +284,140 @@
         @media (min-width: 768px) { #inventory-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; } }
         .equipped-status { background: linear-gradient(45deg, #fbbf24, #f59e0b); color: black; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; margin-left: 8px; }
 
+        /* --- Library Styles --- */
+        #library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            width: 100%;
+            padding: 4px;
+        }
+        @media (min-width: 640px) { #library-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); } }
+
+        .lib-card {
+            width: 100%;
+            aspect-ratio: 0.85; /* Slightly taller */
+            background: linear-gradient(180deg, rgba(30,30,35,0.9), rgba(15,15,20,0.95));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lib-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .lib-card.locked {
+            filter: grayscale(1) brightness(0.4);
+            opacity: 0.6;
+            border: 1px dashed rgba(255,255,255,0.1);
+            background: rgba(10,10,10,0.5);
+        }
+        
+        .lib-card:not(.locked):hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.2);
+            z-index: 10;
+        }
+        .lib-card:not(.locked):hover::before { opacity: 1; }
+
+        .lib-aura-name {
+            font-size: 0.85rem;
+            text-align: center;
+            font-weight: 800;
+            z-index: 2;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .lib-chance {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            font-family: 'Share Tech Mono', monospace;
+            margin-top: 2px;
+            z-index: 2;
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .lib-icon {
+            font-size: 1.8rem;
+            margin: 8px 0;
+            z-index: 2;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .lib-play-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+            font-weight: 600;
+        }
+        .lib-play-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); color: white; border-color: rgba(255,255,255,0.3); }
+        .lib-play-btn:active { transform: scale(0.95); }
+
+        /* --- New Year Event Tree (Less Intrusive) --- */
+        #event-tree {
+            position: absolute;
+            font-size: 2rem; /* Smaller */
+            cursor: pointer;
+            filter: drop-shadow(0 0 5px gold);
+            animation: tree-pulse 2s infinite alternate; /* Slower */
+            z-index: 40; 
+            display: none;
+            transition: all 0.3s;
+            opacity: 0.8;
+        }
+        #event-tree:hover { transform: scale(1.1) rotate(5deg); opacity: 1; }
+        @keyframes tree-pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+        
+        .xmas-text {
+            color: #22c55e;
+            text-shadow: 0 0 5px #15803d;
+        }
+
+        /* Minimalist Archangel SVG */
+        .archangel-svg {
+            width: 200px;
+            height: 200px;
+            fill: none;
+            stroke: #fbbf24;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 10px #d97706);
+            animation: archangel-wings-reveal 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
     </style>
 </head>
 <body>
 
     <div id="particles-container"></div>
     <div id="crazy-border-overlay"></div>
+
+    <!-- NEW YEAR EVENT ELEMENT -->
+    <div id="event-tree" title="Click for a Gift!">🎄</div>
 
     <!-- CUTSCENE OVERLAY -->
     <div id="cutscene-overlay">
@@ -297,7 +446,7 @@
                 </div>
             </div>
         </div>
-        <!-- UPDATED ALIGNMENT SECTION -->
+        <!-- ALIGNMENT SECTION -->
         <div class="flex justify-between items-center border-t border-gray-800 pt-2 h-10">
              <div class="flex items-center gap-4">
                  <div class="flex items-center gap-2">
@@ -305,14 +454,16 @@
                     <span id="luck-multiplier" class="text-lg font-bold text-yellow-400">x1.0</span>
                  </div>
                  <div id="equipped-aura-display" class="text-sm hidden flex items-center">
-                        <span class="text-gray-400">Буст:</span>
+                        <span class="text-gray-400">Boost:</span>
                         <span id="equipped-aura-name" class="font-bold ml-1"></span>
                         <span id="equipped-aura-mult" class="equipped-status ml-2"></span>
                 </div>
              </div>
              
              <div class="flex items-center gap-3">
-                 <div id="bonus-info" class="text-xs text-blue-400 font-mono hidden">X2 BOOST!</div>
+                 <div id="event-timer" class="text-xs text-green-400 font-bold hidden">🎄 x5 LUCK: <span id="event-countdown">0</span>s</div>
+                 <div id="event-msg" class="text-xs text-yellow-400 font-bold hidden"></div>
+                 <div id="bonus-info" class="text-xs text-blue-400 font-mono hidden">X2 ROLL!</div>
                  <div id="luck-progress" class="text-yellow-400 font-bold text-xl">1/10</div>
              </div>
         </div>
@@ -335,7 +486,6 @@
                     <div id="current-aura-chance" class="text-lg md:text-2xl font-mono text-gray-400 bg-black/40 px-6 py-2 rounded-full inline-block backdrop-blur-sm border border-white/10">
                         1 in ???
                     </div>
-                    <!-- Description hidden per user request -->
                     <div id="current-aura-desc" class="hidden text-sm md:text-lg text-gray-400 max-w-xl mx-auto mt-2 min-h-[1.5em] px-4 break-words"></div>
                 </div>
             </div>
@@ -346,12 +496,15 @@
                 <span class="relative z-10 flex items-center justify-center gap-3"><i class="fa-solid fa-dice-d20"></i> ROLL</span>
             </button>
 
-            <div class="grid grid-cols-2 gap-4 w-full">
+            <div class="grid grid-cols-3 gap-2 w-full">
                 <button id="auto-roll-btn" class="h-12 border border-gray-700 bg-gray-900/50 rounded hover:bg-gray-800 text-gray-300 font-bold flex items-center justify-center gap-2 transition-all">
                     <i class="fa-solid fa-arrows-rotate"></i> AUTO
                 </button>
                 <button onclick="toggleDrawer()" class="h-12 border border-gray-700 bg-gray-900/50 rounded hover:bg-gray-800 text-gray-300 font-bold flex items-center justify-center gap-2 transition-all">
-                    <i class="fa-solid fa-box-open"></i> INVENTORY
+                    <i class="fa-solid fa-box-open"></i> ITEMS
+                </button>
+                <button onclick="toggleLibrary()" class="h-12 border border-gray-700 bg-gray-900/50 rounded hover:bg-gray-800 text-gray-300 font-bold flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-book-open"></i> LIBRARY
                 </button>
             </div>
         </div>
@@ -372,6 +525,18 @@
         </div>
     </div>
 
+    <!-- Library Drawer -->
+    <div id="library-drawer" class="fixed inset-0 bg-black/95 backdrop-blur-xl transform translate-y-full transition-transform duration-300 z-50 flex flex-col">
+        <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-[#121215]">
+            <div class="text-lg font-bold text-white px-2">Aura Library</div>
+            <button onclick="toggleLibrary()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-2x"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4">
+             <div class="mb-4 text-xs text-gray-500 text-center uppercase">Collect all auras to become the RNG God</div>
+             <div id="library-grid" class="w-full"></div>
+        </div>
+    </div>
+
     <script>
         // --- SOUNDS SYSTEM ---
         const AUDIO_FILES = {
@@ -379,7 +544,8 @@
             close: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/close.wav',
             delete: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/deleting%20all%20inventory%20or%201%20item.wav',
             get: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/getting%20pet%20or%20seed.wav',
-            equip: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/hatchegg.wav'
+            equip: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/hatchegg.wav',
+            xmas: 'https://github.com/GAG-simulator/zen/raw/refs/heads/main/getting%20pet%20or%20seed.wav' 
         };
 
         const sounds = {};
@@ -394,9 +560,11 @@
 
         function playSound(key) {
             if (isMuted || !sounds[key]) return;
-            sounds[key].pause();
-            sounds[key].currentTime = 0;
-            sounds[key].play().catch(e => console.log('Audio error:', e));
+            try {
+                sounds[key].pause();
+                sounds[key].currentTime = 0;
+                sounds[key].play().catch(() => {});
+            } catch(e) {}
         }
 
         document.getElementById('mute-btn').addEventListener('click', function() {
@@ -423,25 +591,30 @@
             'infinity': 3.0
         };
 
-        // REBALANCED CHANCES TO CAP AT 10M
         const AURAS = [
-            // No particles for common/uncommon/rare
-            { id: 'common', name: 'COMMON', chance: 2, color: 'aura-common', hex: '#71717a', desc: '', particle: null },
+            { id: 'common', name: 'COMMON', chance: 2, color: 'aura-common', hex: '#a1a1aa', desc: '', particle: null },
             { id: 'uncommon', name: 'UNCOMMON', chance: 4, color: 'aura-uncommon', hex: '#4ade80', desc: '', particle: null },
+            
+            // Low Tiers
+            { id: 'wind', name: 'WIND', chance: 8, color: 'aura-wind', hex: '#d6d3d1', desc: '', particle: 'wind-lines' },
+            { id: 'sand', name: 'SAND', chance: 12, color: 'aura-sand', hex: '#fde047', desc: '', particle: null },
+            { id: 'water', name: 'WATER', chance: 15, color: 'aura-water', hex: '#0ea5e9', desc: '', particle: 'bubble-small' },
             { id: 'rare', name: 'RARE', chance: 16, color: 'aura-rare', hex: '#3b82f6', desc: '', particle: null },
             
-            // Effects start at EPIC
+            { id: 'gilded', name: 'GILDED', chance: 32, color: 'aura-gilded', hex: '#facc15', desc: '', particle: 'gold-shimmer' },
+            { id: 'rose', name: 'ROSE', chance: 45, color: 'aura-rose', hex: '#fb7185', desc: '', particle: 'petal-small' },
+
             { id: 'epic', name: 'EPIC', chance: 64, color: 'aura-epic', hex: '#a855f7', desc: '', particle: 'sparkles-purple' },
             
-            { id: 'crystal', name: 'CRYSTAL', chance: 100, color: 'aura-crystal', hex: '#e0f2fe', desc: '', particle: 'crystal-shards' },
-            { id: 'bloom', name: 'BLOOM', chance: 250, color: 'aura-bloom', hex: '#f472b6', desc: '', particle: 'sakura-petals' },
-            { id: 'toxic', name: 'TOXIC', chance: 500, color: 'aura-toxic', hex: '#bef264', desc: '', particle: 'toxic-bubble' },
-            { id: 'pyromaniac', name: 'PYROMANIAC', chance: 1000, color: 'aura-pyromaniac', hex: '#f97316', desc: '', particle: 'fire-sparks' },
-            { id: 'storm', name: 'STORM', chance: 2000, color: 'aura-storm', hex: '#64748b', desc: '', particle: 'heavy-rain' },
-            { id: 'lunar', name: 'LUNAR', chance: 3000, color: 'aura-lunar', hex: '#e2e8f0', desc: '', particle: 'moon-glow' },
-            { id: 'crimson', name: 'CRIMSON', chance: 5000, color: 'aura-crimson', hex: '#991b1b', desc: '', particle: 'blood-mist' },
+            { id: 'crystal', name: 'CRYSTAL', chance: 120, color: 'aura-crystal', hex: '#e0f2fe', desc: '', particle: 'crystal-shards' },
+            { id: 'bloom', name: 'BLOOM', chance: 350, color: 'aura-bloom', hex: '#f472b6', desc: '', particle: 'sakura-petals' },
+            { id: 'toxic', name: 'TOXIC', chance: 850, color: 'aura-toxic', hex: '#bef264', desc: '', particle: 'toxic-bubble' },
+            { id: 'pyromaniac', name: 'PYROMANIAC', chance: 1500, color: 'aura-pyromaniac', hex: '#f97316', desc: '', particle: 'fire-sparks' },
+            { id: 'storm', name: 'STORM', chance: 2200, color: 'aura-storm', hex: '#64748b', desc: '', particle: 'heavy-rain' },
+            { id: 'lunar', name: 'LUNAR', chance: 5000, color: 'aura-lunar', hex: '#e2e8f0', desc: '', particle: 'moon-glow' },
+            { id: 'crimson', name: 'CRIMSON', chance: 9500, color: 'aura-crimson', hex: '#991b1b', desc: '', particle: 'blood-mist' },
             
-            { id: 'glacial', name: 'GLACIAL', chance: 10000, color: 'aura-glacial', hex: '#22d3ee', desc: '', particle: 'snow-flakes' },
+            { id: 'glacial', name: 'GLACIAL', chance: 10500, color: 'aura-glacial', hex: '#22d3ee', desc: '', particle: 'snow-flakes' },
             { id: 'magnetic', name: 'MAGNETIC', chance: 12000, color: 'aura-magnetic', hex: '#94a3b8', desc: '', particle: 'magnet-pull' },
             { id: 'vortex', name: 'VORTEX', chance: 25000, color: 'aura-vortex', hex: '#10b981', desc: '', particle: 'spiral-green' },
             { id: 'demon', name: 'DEMON', chance: 35000, color: 'aura-demon', hex: '#dc2626', desc: '', particle: 'hell-fire' },
@@ -455,21 +628,22 @@
             { id: 'matrix', name: 'MATRIX', chance: 800000, color: 'aura-matrix', hex: '#00ff00', desc: '', cutscene: true, particle: 'binary-code', hasBoost: true },
             { id: 'transcendent', name: 'TRANSCENDENT', chance: 1200000, color: 'aura-transcendent', hex: '#22d3ee', desc: '', cutscene: true, particle: 'ascension-beams', hasBoost: true },
             { id: 'solaris', name: 'SOLARIS', chance: 1500000, color: 'aura-solaris', hex: '#f97316', desc: '', cutscene: true, particle: 'sun-pulse', hasBoost: true },
+            
+            // REVERTED HYPERNOVA (Original style, but kept the slightly better text glow)
             { id: 'hypernova', name: 'HYPERNOVA', chance: 2000000, color: 'aura-hypernova', hex: '#ec4899', desc: '', cutscene: true, particle: 'galaxy-swirl', hasBoost: true },
             
-            // CHANGED ARCHANGEL (Chance & Effect)
-            { id: 'archangel', name: 'ARCHANGEL', chance: 3500000, color: 'aura-archangel', hex: '#fbbf24', desc: '', cutscene: true, particle: 'archangel-ascendance', hasBoost: true },
+            // MINIMALIST ARCHANGEL
+            { id: 'archangel', name: 'ARCHANGEL', chance: 3500000, color: 'aura-archangel', hex: '#fbbf24', desc: '', cutscene: true, particle: 'archangel-divine', hasBoost: true },
             
-            // SQUASHED THE END
             { id: 'theend', name: 'THE END', chance: 6666666, color: 'aura-theend', hex: '#000000', desc: '', cutscene: true, particle: 'void-static', hasBoost: true },
             
-            // CAPPED AT 10M
             { id: 'infinity', name: 'INFINITY', chance: 10000000, color: 'aura-infinity', hex: '#ffffff', desc: '', cutscene: true, particle: 'infinity-rainbow', hasBoost: true }
         ];
 
         let state = { 
             totalRolls: 0, 
             inventory: {}, 
+            discovered: [], 
             bestAura: null, 
             autoRoll: false,
             equippedAura: null
@@ -478,6 +652,12 @@
         let isOnCooldown = false;
         let autoInterval = null;
         let particleInterval = null;
+        
+        // --- NEW YEAR EVENT VARIABLES ---
+        let eventLuckMultiplier = 1;
+        let eventTimer = null;
+        let treeTimeout = null;
+        let treeActive = false;
 
         const els = {
             rollBtn: document.getElementById('roll-btn'),
@@ -488,7 +668,9 @@
             desc: document.getElementById('current-aura-desc'),
             glow: document.getElementById('main-glow'),
             drawer: document.getElementById('main-drawer'),
+            libraryDrawer: document.getElementById('library-drawer'),
             invGrid: document.getElementById('inventory-grid'),
+            libraryGrid: document.getElementById('library-grid'),
             luckMult: document.getElementById('luck-multiplier'),
             bonusInfo: document.getElementById('bonus-info'),
             luckProgress: document.getElementById('luck-progress'),
@@ -497,6 +679,10 @@
             equippedDisplay: document.getElementById('equipped-aura-display'),
             equippedName: document.getElementById('equipped-aura-name'),
             equippedMult: document.getElementById('equipped-aura-mult'),
+            eventTree: document.getElementById('event-tree'),
+            eventTimerDisplay: document.getElementById('event-timer'),
+            eventMsg: document.getElementById('event-msg'),
+            eventCountdown: document.getElementById('event-countdown'),
             cutscene: {
                 overlay: document.getElementById('cutscene-overlay'),
                 visual: document.getElementById('cutscene-visual-container'),
@@ -517,6 +703,82 @@
 
             els.rollBtn.addEventListener('click', () => { if(!isRolling && !isOnCooldown && !state.autoRoll) performRoll(); });
             els.autoBtn.addEventListener('click', toggleAutoRoll);
+            
+            // Init Event
+            els.eventTree.addEventListener('click', activateEventBuff);
+            scheduleTreeSpawn();
+        }
+
+        // --- NEW YEAR EVENT LOGIC (IMPROVED) ---
+        function scheduleTreeSpawn() {
+            if (treeTimeout) clearTimeout(treeTimeout);
+            // Random time between 5s and 60s
+            const delay = Math.floor(Math.random() * 55000) + 5000;
+            treeTimeout = setTimeout(spawnTree, delay);
+        }
+
+        function spawnTree() {
+            if (treeActive) return; 
+            
+            // Avoid headers and bottom
+            const x = Math.random() * (window.innerWidth - 60);
+            const y = Math.random() * (window.innerHeight - 200) + 80;
+            
+            els.eventTree.style.left = x + 'px';
+            els.eventTree.style.top = y + 'px';
+            els.eventTree.style.display = 'block';
+            treeActive = true;
+        }
+
+        function activateEventBuff() {
+            if (!treeActive) return;
+            treeActive = false;
+            els.eventTree.style.display = 'none';
+            playSound('xmas');
+            
+            // 10% Chance for Free Aura > 1000 rarity
+            if (Math.random() < 0.1) {
+                const candidates = AURAS.filter(a => a.chance >= 1000);
+                if (candidates.length > 0) {
+                    const reward = candidates[Math.floor(Math.random() * candidates.length)];
+                    
+                    // Add to inv
+                    if (!state.inventory[reward.id]) state.inventory[reward.id] = { count: 0, isFavorite: false };
+                    state.inventory[reward.id].count++;
+                    if (!state.discovered.includes(reward.id)) state.discovered.push(reward.id);
+                    
+                    saveData();
+                    
+                    // Show message
+                    els.eventMsg.innerText = `🎁 FOUND: ${reward.name}!`;
+                    els.eventMsg.classList.remove('hidden');
+                    setTimeout(() => els.eventMsg.classList.add('hidden'), 4000);
+                    
+                    recalculateBestAura();
+                }
+            } else {
+                // 90% Chance for Luck Buff
+                eventLuckMultiplier = 5;
+                els.eventTimerDisplay.classList.remove('hidden');
+                let timeLeft = 60; 
+                els.eventCountdown.innerText = timeLeft;
+                updateStatsUI();
+
+                if (eventTimer) clearInterval(eventTimer);
+                eventTimer = setInterval(() => {
+                    timeLeft--;
+                    els.eventCountdown.innerText = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(eventTimer);
+                        eventLuckMultiplier = 1;
+                        els.eventTimerDisplay.classList.add('hidden');
+                        updateStatsUI();
+                    }
+                }, 1000);
+            }
+
+            // Schedule next tree
+            scheduleTreeSpawn();
         }
 
         async function performRoll(skipAnim = false) {
@@ -558,7 +820,7 @@
                 auraBoost = BOOST_MULTIPLIERS[state.equippedAura];
             }
             
-            const totalLuck = baseLuck * auraBoost;
+            const totalLuck = baseLuck * auraBoost * eventLuckMultiplier;
             
             let result = AURAS[0];
             const sorted = [...AURAS].sort((a,b) => b.chance - a.chance);
@@ -577,6 +839,11 @@
                 state.inventory[result.id] = { count: 0, isFavorite: false };
             }
             state.inventory[result.id].count++;
+
+            if (!state.discovered) state.discovered = [];
+            if (!state.discovered.includes(result.id)) {
+                state.discovered.push(result.id);
+            }
             
             if (!state.bestAura || result.chance > state.bestAura.chance) {
                 state.bestAura = result;
@@ -596,6 +863,8 @@
             playSound('get');
 
             if (!els.drawer.classList.contains('translate-y-full')) renderInventory();
+            if (!els.libraryDrawer.classList.contains('translate-y-full')) renderLibrary();
+
             isRolling = false;
         }
 
@@ -603,7 +872,7 @@
             if (!state.inventory[auraId] || state.inventory[auraId].count === 0) return;
             const aura = AURAS.find(a => a.id === auraId);
             if (!aura.hasBoost) {
-                alert('Эта аура не дает буста удачи!');
+                alert('This aura has no luck boost!');
                 return;
             }
             playSound('equip');
@@ -627,7 +896,7 @@
                     els.equippedName.className = `font-bold ml-1 ${aura.color}`;
                     els.equippedMult.textContent = `x${multiplier.toFixed(1)}`;
                     els.equippedDisplay.classList.remove('hidden');
-                    els.equippedDisplay.classList.add('flex'); // Ensure flex is added
+                    els.equippedDisplay.classList.add('flex');
                 } else {
                     state.equippedAura = null;
                     els.equippedDisplay.classList.add('hidden');
@@ -681,12 +950,10 @@
                 delIcon.innerHTML = `<i class="fa-solid fa-trash text-red-500"></i>`;
                 delIcon.onclick = (e) => {
                     e.stopPropagation();
-                    // --- NEW PROTECTION LOGIC ---
                     if (item.isFavorite) {
-                        alert("Нельзя удалить избранную ауру! Сначала уберите метку избранного.");
+                        alert("Cannot delete favorite aura!");
                         return;
                     }
-                    // ----------------------------
                     playSound('delete');
                     item.count--;
                     if (item.count === 0) { delete state.inventory[aura.id]; if (state.equippedAura === aura.id) { state.equippedAura = null; updateEquippedDisplay(); } }
@@ -695,8 +962,63 @@
                 };
                 card.appendChild(delIcon);
                 card.onclick = () => { displayResult(aura); if (!aura.hasBoost) { toggleDrawer(); } };
-                card.title = aura.name; // Simple hover title since desc is gone
+                card.title = aura.name;
                 els.invGrid.appendChild(card);
+            });
+        }
+
+        function renderLibrary() {
+            els.libraryGrid.innerHTML = '';
+            AURAS.forEach(aura => {
+                const isUnlocked = state.discovered && state.discovered.includes(aura.id);
+                
+                const card = document.createElement('div');
+                card.className = `lib-card ${isUnlocked ? '' : 'locked'}`;
+                
+                let iconClass = 'fa-certificate';
+                if(aura.chance > 100000) iconClass = 'fa-star';
+                if(aura.chance > 1000000) iconClass = 'fa-crown';
+                
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'lib-icon';
+                if (isUnlocked) {
+                    iconDiv.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+                    iconDiv.style.color = aura.hex;
+                    iconDiv.style.filter = `drop-shadow(0 0 8px ${aura.hex})`;
+                } else {
+                    iconDiv.innerHTML = '<i class="fa-solid fa-lock"></i>';
+                    iconDiv.style.color = '#555';
+                }
+
+                const nameDiv = document.createElement('div');
+                nameDiv.className = `lib-aura-name ${isUnlocked ? aura.color : 'text-gray-500'}`;
+                nameDiv.innerText = isUnlocked ? aura.name : '???';
+
+                const chanceDiv = document.createElement('div');
+                chanceDiv.className = 'lib-chance';
+                chanceDiv.innerText = `1 in ${formatNumber(aura.chance)}`;
+                if(!isUnlocked) chanceDiv.style.opacity = '0.5';
+
+                let btn = null;
+                if (isUnlocked && aura.cutscene) {
+                    btn = document.createElement('button');
+                    btn.className = 'lib-play-btn';
+                    btn.innerHTML = '<i class="fa-solid fa-play"></i> REPLAY';
+                    btn.onclick = (e) => {
+                        e.stopPropagation();
+                        playCutscene(aura);
+                    }
+                } else {
+                    btn = document.createElement('div');
+                    btn.style.height = '20px';
+                }
+
+                card.appendChild(iconDiv);
+                card.appendChild(nameDiv);
+                card.appendChild(chanceDiv);
+                if (btn) card.appendChild(btn);
+
+                els.libraryGrid.appendChild(card);
             });
         }
 
@@ -714,7 +1036,6 @@
             els.name.innerText = aura.name;
             els.name.className = `aura-base text-5xl md:text-8xl font-bold tracking-wider ${aura.color} drop-shadow-2xl`;
             els.chance.innerText = `1 in ${formatNumber(aura.chance)}`;
-            // Description code removed/hidden
             els.glow.style.backgroundColor = aura.hex;
             els.glow.style.opacity = aura.chance >= 400000 ? '0.5' : '0.15';
             
@@ -795,28 +1116,21 @@
                 await wait(3000);
 
             } else if (aura.id === 'hypernova') {
+                // REVERTED HYPERNOVA CUTSCENE (Original Explosive Style)
                 const supernova = document.createElement('div');
                 supernova.style.cssText = "width: 200px; height: 200px; border-radius: 50%; background: #ec4899; animation: hypernova-explode 3s ease-out forwards;";
                 vis.appendChild(supernova);
                 await wait(3000);
 
             } else if (aura.id === 'archangel') {
-                // NEW ARCHANGEL CUTSCENE (Holy Ascendance)
-                ol.style.background = '#0c0a00';
-                const container = document.createElement('div');
-                container.style.width = '100%'; container.style.height = '100%';
-                container.style.position = 'relative';
-                
-                // Big central column
-                const beam = document.createElement('div');
-                beam.style.cssText = "position:absolute; left:50%; bottom:0; width:100px; height:0%; background: linear-gradient(to top, #fbbf24, transparent); transform:translateX(-50%); opacity:0; box-shadow: 0 0 50px #b45309;";
-                beam.animate([
-                    { height: '0%', opacity: 0 },
-                    { height: '150%', opacity: 1 },
-                    { height: '150%', opacity: 0 }
-                ], { duration: 2500, easing: 'ease-out' });
-                container.appendChild(beam);
-                vis.appendChild(container);
+                // MINIMALIST SVG ARCHANGEL
+                ol.style.background = '#0a0500';
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("viewBox", "0 0 100 100");
+                svg.classList.add("archangel-svg");
+                // Stylized Wings Path
+                svg.innerHTML = '<path d="M50 80 Q 20 80 10 40 Q 30 50 50 60 Q 70 50 90 40 Q 80 80 50 80 Z" fill="none" stroke="gold" stroke-width="2" /> <circle cx="50" cy="30" r="10" stroke="gold" stroke-width="2" fill="none" />';
+                vis.appendChild(svg);
                 await wait(3000);
 
             } else if (aura.id === 'theend') {
@@ -877,7 +1191,7 @@
             els.crazyBorder.style.animation = 'none';
 
             if(particleInterval) clearInterval(particleInterval);
-            if(!aura.particle) return; // Returns if null (Common, Uncommon, Rare)
+            if(!aura.particle) return; // Returns if null
 
             // --- 1. CRAZY SPECIAL CASE ---
             if (aura.particle === 'crazy-border') {
@@ -903,7 +1217,7 @@
             if (aura.particle === 'sakura-petals') rate = 300; 
             if (aura.particle === 'necromancer-souls') rate = 150; 
             if (aura.particle === 'feathers-white') rate = 400; 
-            if (aura.particle === 'archangel-ascendance') rate = 100; // Fast for beams
+            if (aura.particle === 'archangel-divine') rate = 80;
 
             particleInterval = setInterval(() => {
                 const p = document.createElement('div');
@@ -923,6 +1237,25 @@
                         { transform: `translate(${Math.random()*100 - 50}px, 50vh) rotate(180deg)`, opacity: 1 },
                         { transform: `translate(${Math.random()*200 - 100}px, 105vh) rotate(360deg)`, opacity: 0 }
                     ], { duration: 6000 + Math.random()*2000 }).onfinish = () => p.remove();
+                
+                // NEW: WIND
+                } else if (aura.particle === 'wind-lines') {
+                    p.style.width = (50 + Math.random()*100) + 'px';
+                    p.style.height = '2px';
+                    p.style.background = 'rgba(255,255,255,0.3)';
+                    p.style.left = '-150px';
+                    p.style.top = Math.random() * 100 + 'vh';
+                    p.animate([
+                        { transform: 'translateX(0)', opacity: 0 },
+                        { transform: 'translateX(120vw)', opacity: 1 }
+                    ], { duration: 1000 + Math.random()*1000 }).onfinish = ()=>p.remove();
+
+                // NEW: WATER (Bubble)
+                } else if (aura.particle === 'bubble-small') {
+                    p.style.width = (5 + Math.random()*5) + 'px'; p.style.height = p.style.width;
+                    p.style.border = '1px solid #0ea5e9'; p.style.borderRadius = '50%';
+                    p.style.left = Math.random() * 100 + 'vw'; p.style.bottom = '-10px';
+                    p.animate([{transform:'translateY(0)', opacity:1}, {transform:'translateY(-50vh)', opacity:0}], {duration: 3000}).onfinish=()=>p.remove();
 
                 // 3. NECROMANCER (Rising Souls)
                 } else if (aura.particle === 'necromancer-souls') {
@@ -952,8 +1285,6 @@
                         { transform: 'scale(1) rotate(45deg)', opacity: 1 },
                         { transform: 'scale(0) rotate(90deg)', opacity: 0 }
                     ], { duration: 1500 }).onfinish = () => p.remove();
-
-                // [COMMON, UNCOMMON, RARE effects removed]
 
                 // 8. EPIC (Purple Sparkles)
                 } else if (aura.particle === 'sparkles-purple') {
@@ -1083,19 +1414,28 @@
                     p.style.left=Math.random()*100+'vw'; p.style.top=Math.random()*100+'vh';
                     p.animate([{color:'red', transform:'scale(0)'}, {color:'blue', transform:'scale(1.5)'}, {color:'green', transform:'scale(0)'}], {duration:2000}).onfinish=()=>p.remove();
 
-                // 26. ARCHANGEL (NEW: Ascendance Beams)
-                } else if (aura.particle === 'archangel-ascendance') {
-                    p.style.width = (Math.random()*3 + 1) + 'px';
-                    p.style.height = (Math.random()*50 + 20) + 'px';
-                    p.style.background = 'linear-gradient(to top, transparent, #fbbf24, transparent)';
-                    p.style.left = Math.random() * 100 + 'vw';
-                    p.style.bottom = '-50px';
-                    p.style.boxShadow = '0 0 5px #fbbf24';
-                    p.animate([
-                        { transform: 'translateY(0)', opacity: 0 },
-                        { transform: `translateY(-${Math.random()*80 + 20}vh)`, opacity: 0.8 },
-                        { transform: `translateY(-100vh)`, opacity: 0 }
-                    ], { duration: 3000 + Math.random() * 2000 }).onfinish = () => p.remove();
+                // 26. ARCHANGEL (NEW: Improved)
+                } else if (aura.particle === 'archangel-divine') {
+                    // Golden Feathers
+                    p.innerHTML='<i class="fa-solid fa-feather"></i>'; p.style.color='#fbbf24'; p.style.fontSize=(20+Math.random()*10)+'px';
+                    p.style.left=Math.random()*100+'vw'; p.style.top='-20px';
+                    p.style.textShadow = '0 0 10px #d97706';
+                    p.animate([{transform:'translate(0,0) rotate(0)'}, {transform:`translate(${Math.random()*100-50}px, 110vh) rotate(${Math.random()*180-90}deg)`}], {duration:3000}).onfinish=()=>p.remove();
+                    
+                    // Rising Light Orbs
+                    if (Math.random() > 0.5) {
+                        const orb = document.createElement('div');
+                        orb.classList.add('particle');
+                        orb.style.width = '10px'; orb.style.height = '10px'; orb.style.background = '#fff'; orb.style.borderRadius = '50%';
+                        orb.style.boxShadow = '0 0 15px gold';
+                        orb.style.left = Math.random() * 100 + 'vw'; orb.style.bottom = '-10px';
+                        orb.animate([
+                            {transform: 'translateY(0) scale(1)', opacity: 0},
+                            {transform: 'translateY(-50vh) scale(1.5)', opacity: 1},
+                            {transform: 'translateY(-100vh) scale(0)', opacity: 0}
+                        ], {duration: 2000}).onfinish = ()=>orb.remove();
+                        els.particles.appendChild(orb);
+                    }
                 }
 
                 els.particles.appendChild(p);
@@ -1116,9 +1456,23 @@
         }
 
         function toggleDrawer() { 
+            // Close Library if open
+            if (!els.libraryDrawer.classList.contains('translate-y-full')) {
+                toggleLibrary();
+            }
             if(els.drawer.classList.contains('translate-y-full')) playSound('equip'); else playSound('close');
             els.drawer.classList.toggle('translate-y-full'); 
             if(!els.drawer.classList.contains('translate-y-full')) renderInventory(); 
+        }
+
+        function toggleLibrary() {
+             // Close Inventory if open
+            if (!els.drawer.classList.contains('translate-y-full')) {
+                toggleDrawer();
+            }
+            if(els.libraryDrawer.classList.contains('translate-y-full')) playSound('equip'); else playSound('close');
+            els.libraryDrawer.classList.toggle('translate-y-full');
+            if(!els.libraryDrawer.classList.contains('translate-y-full')) renderLibrary();
         }
         
         function toggleAutoRoll() { 
@@ -1148,7 +1502,10 @@
             const baseLuck = isBaseBoost ? 2 : 1;
             let auraBoost = 1;
             if (state.equippedAura && BOOST_MULTIPLIERS[state.equippedAura]) { auraBoost = BOOST_MULTIPLIERS[state.equippedAura]; }
-            const totalLuck = baseLuck * auraBoost;
+            
+            // Apply Event Multiplier
+            const totalLuck = baseLuck * auraBoost * eventLuckMultiplier;
+            
             els.luckMult.innerText = `x${totalLuck.toFixed(1)}`;
             els.bonusInfo.classList.toggle('hidden', !isBaseBoost);
             let progress = (state.totalRolls % 10) + 1;
@@ -1157,12 +1514,14 @@
             else { els.luckProgress.classList.remove('text-green-400'); els.luckProgress.classList.add('text-yellow-400'); }
         }
 
-        function saveData() { localStorage.setItem('rng_v6', JSON.stringify({ r: state.totalRolls, i: state.inventory, e: state.equippedAura })); }
+        function saveData() { localStorage.setItem('rng_v7', JSON.stringify({ r: state.totalRolls, i: state.inventory, e: state.equippedAura, d: state.discovered })); }
         function loadData() { 
             try { 
-                const d = JSON.parse(localStorage.getItem('rng_v6')); 
+                const d = JSON.parse(localStorage.getItem('rng_v7')); 
                 if(d) { 
                     state.totalRolls = d.r || 0; state.equippedAura = d.e || null;
+                    state.discovered = d.d || []; 
+                    
                     if (d.i && typeof d.i === 'object') {
                         state.inventory = {};
                         for (let id in d.i) {
@@ -1170,11 +1529,23 @@
                             else state.inventory[id] = { count: d.i[id].count || 0, isFavorite: d.i[id].isFavorite || false };
                         }
                     } else { state.inventory = {}; }
+
+                    Object.keys(state.inventory).forEach(id => {
+                        if (state.inventory[id].count > 0 && !state.discovered.includes(id)) {
+                            state.discovered.push(id);
+                        }
+                    });
+
                     recalculateBestAura();
+                } else {
+                    const dOld = JSON.parse(localStorage.getItem('rng_v6'));
+                    if(dOld) {
+                         state.totalRolls = dOld.r || 0; state.equippedAura = dOld.e || null; state.discovered = dOld.d || [];
+                    }
                 }
             } catch(e){ console.error("Load failed", e); state.inventory = {}; } 
         }
-        function clearData() { if(confirm('Delete all progress?')) { playSound('delete'); localStorage.removeItem('rng_v6'); location.reload(); } }
+        function clearData() { if(confirm('Delete all progress?')) { playSound('delete'); localStorage.removeItem('rng_v7'); location.reload(); } }
         function formatNumber(n) { if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1e3) return (n/1e3).toFixed(0)+'k'; return n; }
         const wait = (ms) => new Promise(r => setTimeout(r, ms));
         window.addEventListener('resize', () => { if (els.name.innerText) { const fitScale = calculateFitScale(els.name); els.name.style.transform = `scale(${fitScale})`; } });
